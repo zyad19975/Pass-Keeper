@@ -6,11 +6,12 @@
  */
 module ram_dp #
 (
-    parameter DATA_WIDTH = 64,
-    parameter ADDR_WIDTH = 5
+    parameter DATA_WIDTH = 8,
+    parameter ADDR_WIDTH = 2        
 )
 (
     input  wire                    clk,
+    input  wire                    rst,
     input  wire                    write,
     input  wire                    erase,
 
@@ -39,12 +40,19 @@ always@(posedge clk) begin
 
 end
 
+integer i;
+always@(rst) begin
+
+for (i = 0 ;i < (2**DATA_WIDTH) ; i = i+1 ) begin
+    mem[i] = 0; 
+end
+end
 
 always@(posedge clk) begin
 
     if (write) begin
         if (erase) begin
-            mem[b_din] <= {(2**ADDR_WIDTH){1'b0}};
+            mem[a_din][a_addr] <= 1'b0;
         end else begin
             mem[a_din][a_addr] <= 1'b1;
         end
