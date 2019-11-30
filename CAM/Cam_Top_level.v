@@ -6,10 +6,10 @@
  */
 module cam #(
     // search data bus width
-    parameter DATA_WIDTH = 64,
+    parameter DATA_WIDTH = 8,
 
     // memory size in log2(words)
-    parameter ADDR_WIDTH = 5,
+    parameter ADDR_WIDTH = 2,
     
     // CAM style (SRL, BRAM)
     //parameter CAM_STYLE = "BRAM",
@@ -24,10 +24,10 @@ module cam #(
     input  wire                     write_enable,
 
     //Input data to be look up to
-    input wire [ADDR_WIDTH-1 : 0]   din,
+    input wire [DATA_WIDTH-1 : 0]   din,
 
     //used as input data in case of write operation
-    input wire [ADDR_WIDTH-1 : 0]   cmp_din,
+    input wire [DATA_WIDTH-1 : 0]   cmp_din,
 
     //write addres at writing operation
     input wire [ADDR_WIDTH-1 : 0]   write_addr,
@@ -39,5 +39,61 @@ module cam #(
     output wire                     match,
 
     //the matched address
-    output wire [ADDR_WIDTH-1:0]    match_addr
+    output wire [(2**ADDR_WIDTH)-1:0]    match_addr
     );
+
+
+wire busy_signal;
+assign busy = busy_signal;
+
+wire [DATA_WIDTH-1 : 0] Data_select;
+assign Data_select = (write_enable)? cmp_din : din;
+
+
+wire [DATA_WIDTH-1 : 0] Data_Write_select;
+wire [DATA_WIDTH-1 : 0] Data_Write_erase;
+assign Data_Write_select = (write_enable)? Data_Write_erase : din;
+
+
+
+erase_ram #
+(
+    .DATA_WIDTH (DATA_WIDTH),
+    .ADDR_WIDTH (ADDR_WIDTH)        
+)
+(
+    .clk(clk),
+    .rst(rst),
+    .write(write_enable),
+    .erase(busy_signal),
+
+    .addr(write_addr),
+    .Data_out(Data_Write_erase),
+    .Data_in(din)
+);
+
+
+ram_dp #
+(
+    .DATA_WIDTH (DATA_WIDTH),
+    .ADDR_WIDTH (ADDR_WIDTH)       
+)
+(
+    .clk(clk),
+    .rst(rst),
+    .write(write_enable),
+    .erase(busy_signal),
+
+    // port A
+    .a_addr(write_addr),
+    .a_din(Data_Write_select),
+
+
+    // port B
+    .b_din(Data_select),
+    .b_dout(match_addr)
+);
+
+
+
+endmodule
