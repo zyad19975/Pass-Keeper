@@ -2,6 +2,8 @@
 
 /*
 erase ram block used to check the last data saved in the write addr to erase it
+after receving addr and write signal output data located in this addr
+assign erase = 1 -** also can be used as a busy signal **-
 */
 
 module erase_ram #

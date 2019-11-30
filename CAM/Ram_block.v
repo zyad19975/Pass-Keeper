@@ -21,7 +21,6 @@ module ram_dp #
 
 
     // port B
-    input  wire [ADDR_WIDTH-1:0]        b_addr,
     input  wire [DATA_WIDTH-1:0]        b_din,
     output wire [(2**ADDR_WIDTH)-1:0]   b_dout
 );
