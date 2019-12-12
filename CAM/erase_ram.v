@@ -22,15 +22,15 @@ module erase_ram #
     input    wire [DATA_WIDTH-1:0]    Data_in
 );
 
-reg [(DATA_WIDTH-1):0]  mem [(ADDR_WIDTH)-1:0];
+reg [(DATA_WIDTH-1):0]  mem [(2**ADDR_WIDTH)-1:0];
 reg [DATA_WIDTH-1:0] Data_out_reg;
-reg erase_reg;
+reg erase_reg,delay;
 
 //reseting the memory
 integer i;
 always@(rst) begin
 
-for (i = 0 ;i < (ADDR_WIDTH) ; i = i+1 ) begin
+for (i = 0 ;i < (2**ADDR_WIDTH) ; i = i+1 ) begin
     mem[i] = 0; 
 end
 end
@@ -46,8 +46,10 @@ always@(posedge clk)begin
     end
 
 end
-
-assign erase = erase_reg;
+always@(posedge clk)begin
+    delay <= erase_reg;
+end
+assign erase = delay;
 assign Data_out = Data_out_reg;
 
 endmodule

@@ -6,13 +6,10 @@
  */
 module cam #(
     // search data bus width
-    parameter DATA_WIDTH = 8,
+    parameter DATA_WIDTH = 4,
 
     // memory size in log2(words)
-    parameter ADDR_WIDTH = 2,
-    
-    // CAM style (SRL, BRAM)
-    //parameter CAM_STYLE = "BRAM",
+    parameter ADDR_WIDTH = 2
     
 
 )
@@ -39,7 +36,7 @@ module cam #(
     output wire                     match,
 
     //the matched address
-    output wire [(2**ADDR_WIDTH)-1:0]    match_addr
+    output wire [ADDR_WIDTH-1:0]    match_addr
     );
 
 
@@ -54,14 +51,13 @@ wire [DATA_WIDTH-1 : 0] Data_Write_select;
 wire [DATA_WIDTH-1 : 0] Data_Write_erase;
 assign Data_Write_select = (write_enable)? Data_Write_erase : din;
 
+wire [(2**ADDR_WIDTH)-1:0] match_addr_unencoded;
 
-
-erase_ram #
-(
+erase_ram #(
     .DATA_WIDTH (DATA_WIDTH),
     .ADDR_WIDTH (ADDR_WIDTH)        
 )
-(
+erase_ram_inst(
     .clk(clk),
     .rst(rst),
     .write(write_enable),
@@ -73,12 +69,11 @@ erase_ram #
 );
 
 
-ram_dp #
-(
+ram_dp #(
     .DATA_WIDTH (DATA_WIDTH),
     .ADDR_WIDTH (ADDR_WIDTH)       
 )
-(
+ram_dp_inst(
     .clk(clk),
     .rst(rst),
     .write(write_enable),
@@ -91,9 +86,17 @@ ram_dp #
 
     // port B
     .b_din(Data_select),
-    .b_dout(match_addr)
+    .b_dout(match_addr_unencoded)
 );
 
-
+encoder #(
+            .WIDTH(2**ADDR_WIDTH),
+            .LSB_PRIORITY("HIGH")
+        )
+        encoder_inst1 (
+            .input_unencoded(match_addr_unencoded),
+            .output_valid(match),
+            .output_encoded(match_addr)
+        );
 
 endmodule

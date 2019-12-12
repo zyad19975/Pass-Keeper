@@ -50,12 +50,13 @@ end
 always@(posedge clk) begin
 
     if (write) begin
-        if (erase) begin
+       
             mem[a_din][a_addr] <= 1'b0;
-        end else begin
+    end 
+    if (erase)  begin
             mem[a_din][a_addr] <= 1'b1;
-        end
     end
+    
 
 end
 
