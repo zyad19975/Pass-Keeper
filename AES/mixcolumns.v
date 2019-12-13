@@ -1,4 +1,4 @@
-module Mix_Column(input[127:0]in, output[127:0]out);
+module Mix_Column(input wire[127:0]in, output reg[127:0]out);
   function [7:0] mul_2(input [7:0] byte);  // multiply by 2 "x" 
     begin 
       if(byte[7]==1'b0)		// if MSB = 0, SLL by 1
@@ -47,9 +47,10 @@ module Mix_Column(input[127:0]in, output[127:0]out);
       mix_column = {mix_column0(word),mix_column1(word),mix_column2(word),mix_column3(word)};
     end
   endfunction
-
-assign out = {mix_column(in[127:96]), mix_column(in[95:64]), mix_column(in[63:32]), mix_column(in[31:0])};
-
+  always @*
+	  begin
+ out = {mix_column(in[127:96]), mix_column(in[95:64]), mix_column(in[63:32]), mix_column(in[31:0])};
+		   end
 endmodule 
-
+//
 //128'h7cf22bab6b30767701fe7b6f0763c567
