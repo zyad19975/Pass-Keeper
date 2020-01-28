@@ -15,25 +15,42 @@ Description:
 */
 module inv_round (
 	input wire [127:0]in,
-	input wire[3:0]round_num,
+	input wire last,
 	input wire [127:0]keyin,
-	output reg [127:0]keyout, 
 	output reg[127:0]out
 	);
 	
 	wire [127:0]sb_out, sr_out, mc_out,  kout,oout;
 	
-	inv_keygen x(round_num, keyin, kout); 	 
+	assign kout=keyin;
 	
 	inv_shift_rows sr(in, sr_out);
+	always @(sr_out)begin
+$display("sr_out %h",sr_out);
+end
 	inv_subbytes sb(sr_out, sb_out);
+		always @(sb_out)begin
+$display("sb_out %h",sb_out);
+end
 	inv_add_round_keys adk(sb_out, kout, oout);
+			always @(oout)begin
+$display("oout %h",oout);
+end
+
 	inv_Mix_Column mc(oout, mc_out);  
-	
+			always @(mc_out)begin
+$display("mc_out %h",mc_out);
+end
 	always@*
 		begin
-			keyout=kout;
+			if (last==0)
+			begin 
 			out =mc_out;
+			end
+			else 
+				begin 
+			out =oout;
+			end
 			
 		end
 	
