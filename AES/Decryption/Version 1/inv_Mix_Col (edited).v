@@ -104,7 +104,7 @@ function [7:0] mul_8(input [7:0] byte);  // multiply by 8 "x^3"
     end
   endfunction
 
-assign out = {mix_column(in[127:96]), mix_column(in[95:64]), mix_column(in[63:32]), mix_column(in[31:0])};
+assign reg out = {mix_column(in[127:96]), mix_column(in[95:64]), mix_column(in[63:32]), mix_column(in[31:0])};
 endmodule
 
 
