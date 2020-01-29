@@ -42,50 +42,50 @@ inv_add_round_keys adk_0(plaintext, keys[10-0], adk_out0);
 //inv_round 1
 
 wire [127:0] out1;
-inv_round r1 (adk_out0,0,keys[10-1],out1);
+inv_round r1 (adk_out0,1'b0,keys[10-1],out1);
 
 //inv_round 2dd
 
 wire [127:0] out2;
-inv_round r2 (out1,0,keys[10-2],out2);
+inv_round r2 (out1,1'b0,keys[10-2],out2);
 
 //inv_round 3
 
 wire [127:0] out3;
-inv_round r3 (out2,0,keys[10-3],out3);
+inv_round r3 (out2,1'b0,keys[10-3],out3);
 
 //inv_round 4
 
 wire [127:0] out4;
-inv_round r4 (out3,0,keys[10-4],out4);
+inv_round r4 (out3,1'b0,keys[10-4],out4);
 
 //inv_round 5
 
 wire [127:0] out5;
-inv_round r5 (out4,0,keys[10-5],out5);
+inv_round r5 (out4,1'b0,keys[10-5],out5);
 
 //inv_round 6
 
 wire [127:0] out6;
-inv_round r6 (out5,0,keys[10-6],out6);
+inv_round r6 (out5,1'b0,keys[10-6],out6);
 
 //inv_round 7
 
 wire [127:0] out7;
-inv_round r7 (out6,0,keys[10-7],out7);
+inv_round r7 (out6,1'b0,keys[10-7],out7);
 
 //inv_round 8
 wire [127:0] out8;
-inv_round r8 (out7,0,keys[10-8],out8);
+inv_round r8 (out7,1'b0,keys[10-8],out8);
 //inv_round 9
 
 wire [127:0] out9;
-inv_round r9 (out8,0,keys[10-9],out9);
+inv_round r9 (out8,1'b0,keys[10-9],out9);
 
 //inv_round 10
 
 wire [127:0] out10;
-inv_round r10 (out9,1,keys[10-10],out10);
+inv_round r10 (out9,1'b1,keys[10-10],out10);
 
 always @*
 begin
