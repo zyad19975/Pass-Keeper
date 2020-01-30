@@ -1,8 +1,24 @@
+/*
+* ------AES Top Module------
+Inputs :
+	1- PlainText -128 bit wire- (which is sometimes refered to as State)
+	2- Key  -128 bit wire-
+Outputs : 
+	1- CipherText -128 bit register- 
+	2- keyout -128 bit- the final key that have passed by all the shifts 
+	   (used for testing in AES decryption) 
+ 	   
+Description :
+	-AES Top Module consists of an initial ADD Round Key, 9 similar rounds
+	 and a last round
+	-The output of each round (state and keyout) is the input of the next round
+*/
+
 module aes(
 	input wire[127:0]plaintext,
 	input wire[127:0]key,
 	output reg[127:0]cipher_text,
-	output reg[127:0] keyout
+	output reg[127:0] keyout 
 );
 
 

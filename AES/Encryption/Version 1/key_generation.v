@@ -1,5 +1,16 @@
-`timescale 1ns / 1ps
-
+//`timescale 1ns / 1ps
+/*
+------Key Generation Module------
+inputs : 
+	1- round_num -128 bit wire- (Round Number)
+	2- keyin -128 bit wire- (Initial Key)
+outputs: 
+	1- keyout -128 bit register- output key for each round
+Description :
+	- The key is divided into bytes to form a 4 by 4 matrix
+	- We pass block4 (the 4th word) by an sbox for substitution
+	- We XOR the output
+*/
 module keygen(round_num,keyin,keyout);
 	
 	input wire [0:3] round_num;
@@ -19,8 +30,6 @@ module keygen(round_num,keyin,keyout);
 			block3 = keyin[64: 95];					//		| b1 | b2 | b3 | b4 |
 			block4 = keyin[96:127];					//		| b1 | b2 | b3 | b4 |	
 		end
-	
-	
 	
 	
 	// sboxing &shift	

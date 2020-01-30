@@ -1,3 +1,15 @@
+/*
+* ------Substitute Bytes Module------
+Inputs :
+	1- in -128 bit wire- (State)
+Outputs : 
+	1- out -128 bit register- (output)
+ 	   
+Description :
+	-In this module, every byte from the input is substituted with
+	 another byte using the sbox
+*/
+
 module subbytes(
 	input wire[127 : 0] in,
 	output reg [127 : 0] out
