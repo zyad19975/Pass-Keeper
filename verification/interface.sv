@@ -31,44 +31,71 @@ interface CAM_interface(input bit Clk);
 	logic [DATA_WIDTH-1:0] CMP_Din;
         logic [ADDR_WIDTH-1:0] WR_Addr;
 	logic [ADDR_WIDTH-1:0] Match_Addr;
+	bit [DATA_WIDTH-1:0] mem [0:2**ADDR_WIDTH-1];
+	logic finish;
 	 
+	/*clocking cd @(posedge Clk);
+	  output Rest,
+	        Writ_Enable,
+	        Data_IN,
+	        WR_Addr,
+           CMP_Din,
+             mem;
+	  
 	 
-	 modport TEST ( output   Rest,
+	 endclocking*/
+	 modport TEST(output Rest,
+                         Writ_Enable,
+                         Data_IN,
+                         WR_Addr,
+                         CMP_Din,
+                         mem,
+                         finish,
+	    input 
+                    Match,
+                     Busy,
+                    Match_Addr );
+         modport MONITOR ( 
+                 input Clk,
+                        Rest,
+                        Writ_Enable,
+                        Data_IN,
+                        WR_Addr,
+                        CMP_Din,
+                        Match,
+                        Busy,
+                         Match_Addr,
+                         mem,
+                         finish);                                                
+                   endinterface
+						  
+	 
+	/* modport TEST ( output   Rest,
                              Writ_Enable,
                              Data_IN,
-                             WR_Addr,
-                             CMP_Din, 
+                             
            
                     input 
                                Clk,
                                Match,
                                Busy,
-                               Match_Addr );
+                               Match_Addr );*/
                                
-     modport DUT (  output 
-                                                                          
-                               Match,
-                               Busy,
-                               Match_Addr ,
-     
-     
-     
-                    input    Clk,
+    /* modport DUT (  input    Clk,
                               Rest,
                               Writ_Enable,
                               Data_IN,
                               CMP_Din,
-                              WR_Addr ); 
-                                
-      modport MONITOR ( input Clk,
-                              Rest,
-                              Writ_Enable,
-                              Data_IN,
                               WR_Addr,
-                              CMP_Din,
-                              Match,
-                              Busy,
-                              Match_Addr);                          
-                                                   
-                               
-endinterface
+     
+     
+     output 
+                               Busy,                                          
+                               Match,
+                               Match_Addr 
+     
+     
+     
+                     ); */
+                                
+     
