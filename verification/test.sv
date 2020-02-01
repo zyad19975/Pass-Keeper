@@ -1,55 +1,53 @@
 `timescale 1ns / 1ps
 `include "interface.sv"
+
 `include "C:\Users\Emad\Documents\GitHub\GraduationProject_2019_2020\CAM\Cam_Top_level.v"
 `include "C:\Users\Emad\Documents\GitHub\GraduationProject_2019_2020\CAM\erase_ram.v"
 `include "C:\Users\Emad\Documents\GitHub\GraduationProject_2019_2020\CAM\Ram_block.v"
 `include "C:\Users\Emad\Documents\GitHub\GraduationProject_2019_2020\CAM\encoder.v"
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 01/30/2020 07:29:52 PM
-// Design Name: 
-// Module Name: test
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+
+
+parameter DATA_WIDTH =4;
+parameter ADDR_WIDTH = 2;
+
+
 module Test(CAM_interface.TEST ta );
- bit [DATA_WIDTH-1:0] aa;
+ bit [DATA_WIDTH:0] aa;
 initial 
 begin
-        
+        #10
          ta.finish <=0;
         ta.Rest <= 1;
         #10
         ta.Rest <= 0;
-        for (int a=0;a<2**ADDR_WIDTH;a++)
+        #10
+        for (int a=0;a<2**ADDR_WIDTH;a++)// write into Cam
         begin
+                #10
                  ta.Writ_Enable <= 1;
                  aa=$urandom_range(0,2**DATA_WIDTH-1);
                  ta.Data_IN <= aa;
                  ta.WR_Addr <= a;
                  ta.mem[a] = aa;
                   #10
-                 ta.Writ_Enable <= 0;
-       end
-       #15;
-       ta.CMP_Din <=6;
-       #20;
-       ta.CMP_Din <=15;
-       #15;
-       ta.CMP_Din <=4;
-        #20;
-        ta.CMP_Din <=6;
+                 ta.Writ_Enable <= 0;     
+       end // read from cam
+       #10;
+       ta.Data_IN <=6;
+       #10;
+       ta.Data_IN <=15;
+       #10;
+       ta.Data_IN <=4;
+       /////////////////read and write
+        #10;
+        ta.Writ_Enable <= 1;
+        ta.Data_IN <= 9;
+        ta.WR_Addr <= 2;
+        ta.mem[2] = 9;
+        ta.CMP_Din <=15;
+        #10
+        ta.CMP_Din <=13;
+        #20
         ta.finish <=1;
         
     end 
@@ -75,11 +73,12 @@ module top();
     Match <=CA.Match;
     CMP_Din <=CA.CMP_Din;
     mem <=CA.mem;
+    Busy <=CA.Busy;
     end
-    CAM_interface CA(clk);
+    CAM_interface #(.DATA_WIDTHa(DATA_WIDTH),.ADDR_WIDTHa(ADDR_WIDTH)) CA(clk);
     Test ta(CA);
     monitor M(CA);
-   cam #(.DATA_WIDTH(4),.ADDR_WIDTH(2))
+   cam #(.DATA_WIDTH(DATA_WIDTH),.ADDR_WIDTH(ADDR_WIDTH))
    cc(.clk(CA.Clk),
       .rst(CA.Rest),
       .write_enable(CA.Writ_Enable),
@@ -93,8 +92,6 @@ module top();
    
    
 endmodule
-
-
 
 module monitor (CAM_interface.MONITOR KO);
   
@@ -110,23 +107,17 @@ module monitor (CAM_interface.MONITOR KO);
     always @(KO.Data_IN)
     begin
       
-      
-        $fdisplay (fd, "%0d     %0d",a,KO.mem[a]);
-        a++;
-        end  
-        
-        always @(KO.CMP_Din)
+       if(KO.Writ_Enable)
         begin
-        if(KO.Match)
-           $fdisplay (fd, "CMP=%0d    Addr= %0d",KO.CMP_Din, KO.Match_Addr);
-          else 
-           $fdisplay (fd, "CMP=%0d    Addr= NOT Found",KO.CMP_Din,);
-        
+           $fdisplay (fd, "%0d     %0d",a,KO.mem[a]);
+            a++;
         end
+        else if(KO.Match)
+               $fdisplay (fd, "Data_IN=%0d    Addr= %0d",KO.Data_IN, KO.Match_Addr);
+            else 
+               $fdisplay (fd, "Data_IN=%0d    Addr= NOT Found",KO.Data_IN,);
+        end  
         always @(posedge KO.finish)
         $fclose(fd);
         
      endmodule
-
-
- 
