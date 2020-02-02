@@ -47,15 +47,15 @@ always@(posedge clk) begin
     mem[i] = 0;     
     end
     end
+end
+always@(write or erase) begin
     if (write) begin
        
             mem[a_din][a_addr] <= 1'b0;
     end 
-    if (erase)  begin
+    else if (erase)  begin
             mem[a_din][a_addr] <= 1'b1;
     end
-    
-
 end
 
 endmodule

@@ -49,11 +49,38 @@ module CAM_tp ;
         rst = 1;
         #100
         rst = 0;
+        #50
         din = 4'b0011;
         write_addr = 2'b00;
         write_enable = 1;
         #100
         write_enable = 0;
+        #100
+        write_enable = 1;
+        din = 4'b0101;
+        write_addr = 2'b01;
+         #100
+        write_enable = 0;
+        #100
+        write_enable = 1;
+        din = 4'b1011;
+        write_addr = 2'b10;
+         #100
+        write_enable = 0;
+        #100
+        write_enable = 1;
+        din = 4'b1111;
+        write_addr = 2'b11;
+        #100
+        write_enable = 0;
+        din = 4'b0011;
+        #100
+        din = 4'b1011;
+        #100
+        din = 4'b0101;
+        #100
+        din = 4'b0000;
+        
         
 
     end
