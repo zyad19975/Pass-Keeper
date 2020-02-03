@@ -26,20 +26,20 @@ module inv_round (
 	
 	inv_shift_rows sr(in, sr_out);
 	always @(sr_out)begin
-$display("sr_out %h",sr_out);
+
 end
 	inv_subbytes sb(sr_out, sb_out);
 		always @(sb_out)begin
-$display("sb_out %h",sb_out);
+
 end
 	inv_add_round_keys adk(sb_out, kout, oout);
 			always @(oout)begin
-$display("oout %h",oout);
+
 end
 
 	inv_Mix_Column mc(oout, mc_out);  
 			always @(mc_out)begin
-$display("mc_out %h",mc_out);
+
 end
 	always@*
 		begin
