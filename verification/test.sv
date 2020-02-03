@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-`include "interface.sv"
+`include "inter.sv"
 
 `include "C:\Users\Emad\Documents\GitHub\GraduationProject_2019_2020\CAM\Cam_Top_level.v"
 `include "C:\Users\Emad\Documents\GitHub\GraduationProject_2019_2020\CAM\erase_ram.v"
@@ -12,7 +12,7 @@ parameter ADDR_WIDTH = 2;
 
 
 module Test(CAM_interface.TEST ta );
- bit [DATA_WIDTH:0] aa;
+ bit [DATA_WIDTH:0] random_value;
 initial 
 begin
         #10
@@ -25,28 +25,40 @@ begin
         begin
                 #10
                  ta.Writ_Enable <= 1;
-                 aa=$urandom_range(0,2**DATA_WIDTH-1);
-                 ta.Data_IN <= aa;
+                 random_value=$urandom_range(0,2**DATA_WIDTH-1);
+                 ta.Data_IN <= random_value;
                  ta.WR_Addr <= a;
-                 ta.mem[a] = aa;
+                 ta.mem[a] = random_value;
                   #10
                  ta.Writ_Enable <= 0;     
-       end // read from cam
-       #10;
-       ta.Data_IN <=6;
-       #10;
+       end 
+       
+        // read from cam
+    #10
        ta.Data_IN <=15;
-       #10;
+       #10
        ta.Data_IN <=4;
+       #10
+       ta.Data_IN <=13;
+        #10
+      ta.Data_IN <=0;
+       #10
+       ta.Data_IN <=6;
+       #10
+      
+       
        /////////////////read and write
         #10;
         ta.Writ_Enable <= 1;
         ta.Data_IN <= 9;
         ta.WR_Addr <= 2;
         ta.mem[2] = 9;
+        
         ta.CMP_Din <=15;
         #10
-        ta.CMP_Din <=13;
+        ta.CMP_Din <=7;
+        #10
+       ta.CMP_Din <=4;
         #20
         ta.finish <=1;
         
@@ -104,20 +116,48 @@ module monitor (CAM_interface.MONITOR KO);
     $fdisplay (fd, "ADDRESS     DATA");
     a=0;
     end
-    always @(KO.Data_IN)
-    begin
       
-       if(KO.Writ_Enable)
+    always @(posedge KO.Writ_Enable) // write 
         begin
-           $fdisplay (fd, "%0d     %0d",a,KO.mem[a]);
-            a++;
-        end
-        else if(KO.Match)
-               $fdisplay (fd, "Data_IN=%0d    Addr= %0d",KO.Data_IN, KO.Match_Addr);
+           if(a<=2**ADDR_WIDTH-1)
+                 begin
+                         $fdisplay (fd, "%0d       |     %0d",a,KO.mem[a]);
+                       a++;  
+                 end
             else 
-               $fdisplay (fd, "Data_IN=%0d    Addr= NOT Found",KO.Data_IN,);
-        end  
+             updata();
+              
+        end
+        
+        
+      always  @(negedge KO.Clk)
+      begin
+      if(2**ADDR_WIDTH <=a)
+        if (KO.Match)
+           if( KO.Writ_Enable  ) // read with write 
+               $fdisplay (fd, "CMP_Din=%0d    Addr= %0d  Writ_Enable=1  ",KO.CMP_Din, KO.Match_Addr);
+            // read  only 
+            else 
+              $fdisplay (fd, "Data_IN=%0d    Addr= %0d  Writ_Enable=0 ",KO.Data_IN, KO.Match_Addr);      
+        
+         else if(!KO.Match)
+            if( KO.Writ_Enable  ) // read with write 
+                        $fdisplay (fd, "CMP_Din=%0d    NOt Found ",KO.CMP_Din);
+                     // read  only 
+                     else 
+                       $fdisplay (fd, "Data_IN=%0d   NOt Found  ",KO.Data_IN); 
+             
+        end
+        
+        
         always @(posedge KO.finish)
         $fclose(fd);
         
+        task updata;
+          $fdisplay (fd, "  Updata & New Memory     ");
+        for(int i=0;i<2**ADDR_WIDTH;i++)
+          begin 
+             $fdisplay (fd, "%0d       |     %0d ",i,KO.mem[i]);
+          end
+        endtask
      endmodule
