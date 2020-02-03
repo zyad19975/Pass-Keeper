@@ -22,8 +22,8 @@ module inv_aes(
 );
 wire [0:127]keys[0:10];
 wire[127:0]plaintext;
-assign keys[0]=128'h2b7e151628aed2a6abf7158809cf4f3c;
-assign plaintext=128'h3925841d02dc09fbdc118597196a0b32;
+assign keys[0]=key;
+assign plaintext=plaintext1;
 
 inv_keygen as1(4'h1,keys[0],keys[1]);
 inv_keygen as2(4'h2,keys[1],keys[2]);
@@ -90,6 +90,7 @@ inv_round r10 (out9,1'b1,keys[10-10],out10);
 always @*
 begin
 cipher_text=out10;
+keyout=keys[10];
 end
 
 
