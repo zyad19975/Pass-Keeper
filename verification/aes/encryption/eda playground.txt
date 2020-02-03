@@ -1,0 +1,4 @@
+https://www.edaplayground.com/x/ZuN
+
+Compile and run options:
+-timescale=1ns/1ns +vcs+flush+all +warn=all -sverilog aes.cc
