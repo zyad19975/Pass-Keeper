@@ -14,14 +14,6 @@ Description :
 	-The output of each inv_round (state and keyout) is the input of the next inv_round
 */
 
-`include "inv_key_generation.v"
-`include "inv_add_round_keys.v"
-`include "inv_mixcolumns.v"
-`include "inv_round.v"
-`include "sbox.v"
-`include "inv_shift_rows.v"
-`include "inv_subbytes.v"
-
 
 
 module inv_aes(

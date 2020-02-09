@@ -28,8 +28,8 @@ reg erase_reg,delay;
 
 //reseting the memory
 integer i;
-always@(rst) begin
-
+always@(posedge rst) begin
+delay <= 0;
 for (i = 0 ;i < (2**ADDR_WIDTH) ; i = i+1 ) begin
     mem[i] = 0; 
 end

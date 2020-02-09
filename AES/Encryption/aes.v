@@ -1,10 +1,3 @@
-`include "key_generation.v"
-`include "add_round_keys.v"
-`include "mixcolumns.v"
-`include "round.v"
-`include "sbox.v"
-`include "shift_rows.v"
-`include "subbytes.v"
 
 module aes(
 	input wire[127:0]plaintext,

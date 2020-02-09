@@ -1,10 +1,6 @@
 
 `timescale 1ns / 1ps
 
-`include "erase_ram.v"
-`include "Ram_block.v"
-`include "encoder.v"
-
 /*
  * Content Addressable Memory
  */
