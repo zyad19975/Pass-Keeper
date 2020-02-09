@@ -1,10 +1,10 @@
 
 `timescale 1ns / 1ps
-/*`include "Cam_Top_level.v"
+
 `include "erase_ram.v"
 `include "Ram_block.v"
 `include "encoder.v"
-*/
+
 /*
  * Content Addressable Memory
  */
