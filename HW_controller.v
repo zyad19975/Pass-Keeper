@@ -26,15 +26,28 @@ module HW_controller(
     input busy,
     output  cam_write_en,
     output reg flash_to_cam,
-    output  [3:0] address_out //da el address ele mtwsl b flash w cam f nafs el wa2t
+    output  [3:0] address_out, //da el address ele mtwsl b flash w cam f nafs el wa2t
+    output  cam_rest
     );
+    integer count=0;
+   
+    assign cam_rest = (count >= 3) ? 0 : 1;
+    
     reg cam_write;
     integer address = 0;
-    always@(negedge clk)
+    always@(posedge clk)
     begin
+    count = count+1;
         if (boot)
         begin
-            if(cam_write)
+         if ( count == 4 )
+           cam_write <= 1; 
+          else if ( count == 5 )
+           begin
+            cam_write <= 0;
+            count = 3;
+            end
+            /*if(cam_write)
             begin
             cam_write <=0;
             end
@@ -42,7 +55,7 @@ module HW_controller(
             begin
                 flash_to_cam <= 1;
                 cam_write <= 1;
-            end
+            end*/
 
         end
         else
@@ -56,6 +69,6 @@ module HW_controller(
         address = address + 1;
     end
     
-    assign cam_write_en = cam_write;
+    assign cam_write_en = (count >= 2) ? cam_write : 0;
     assign address_out = address;
 endmodule
