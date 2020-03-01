@@ -1,0 +1,83 @@
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -analysis_effort low
+Design : aes
+Version: H-2013.03-SP1
+Date   : Thu Mar  1 08:15:34 2018
+****************************************
+
+
+Library(s) Used:
+
+    saed32hvt_ss0p7vn40c (File: /home/cadence/Desktop/synthesis_1/saed32hvt_ss0p7vn40c.db)
+
+
+Operating Conditions: ss0p7vn40c   Library: saed32hvt_ss0p7vn40c
+Wire Load Model Mode: enclosed
+
+Design        Wire Load Model            Library
+------------------------------------------------
+aes                    35000             saed32hvt_ss0p7vn40c
+add_round_keys_0       8000              saed32hvt_ss0p7vn40c
+round                  35000             saed32hvt_ss0p7vn40c
+keygen                 8000              saed32hvt_ss0p7vn40c
+subbytes               35000             saed32hvt_ss0p7vn40c
+shift_rows             ForQA             saed32hvt_ss0p7vn40c
+Mix_Column             8000              saed32hvt_ss0p7vn40c
+sbox_0                 8000              saed32hvt_ss0p7vn40c
+add_round_keys_1       8000              saed32hvt_ss0p7vn40c
+sbox_1                 8000              saed32hvt_ss0p7vn40c
+sbox_2                 8000              saed32hvt_ss0p7vn40c
+sbox_3                 8000              saed32hvt_ss0p7vn40c
+sbox_4                 8000              saed32hvt_ss0p7vn40c
+sbox_5                 8000              saed32hvt_ss0p7vn40c
+sbox_6                 8000              saed32hvt_ss0p7vn40c
+sbox_7                 8000              saed32hvt_ss0p7vn40c
+sbox_8                 8000              saed32hvt_ss0p7vn40c
+sbox_9                 8000              saed32hvt_ss0p7vn40c
+sbox_10                8000              saed32hvt_ss0p7vn40c
+sbox_11                8000              saed32hvt_ss0p7vn40c
+sbox_12                8000              saed32hvt_ss0p7vn40c
+sbox_13                8000              saed32hvt_ss0p7vn40c
+sbox_14                8000              saed32hvt_ss0p7vn40c
+sbox_15                8000              saed32hvt_ss0p7vn40c
+sbox_16                8000              saed32hvt_ss0p7vn40c
+sbox_17                8000              saed32hvt_ss0p7vn40c
+sbox_18                8000              saed32hvt_ss0p7vn40c
+sbox_19                8000              saed32hvt_ss0p7vn40c
+
+
+Global Operating Voltage = 0.7  
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000ff
+    Time Units = 1ns
+    Dynamic Power Units = 1uW    (derived from V,C,T units)
+    Leakage Power Units = 1pW
+
+
+  Cell Internal Power  =   0.0000 uW    (0%)
+  Net Switching Power  =  22.3187 uW  (100%)
+                         ---------
+Total Dynamic Power    =  22.3187 uW  (100%)
+
+Cell Leakage Power     =   1.1196 mW
+
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
+clock_network      0.0000            0.0000            0.0000            0.0000  (   0.00%)
+register           0.0000            0.5456        3.6755e+07           37.3007  (   3.27%)
+sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
+combinational      0.0000           21.7731        1.0829e+09        1.1047e+03  (  96.73%)
+--------------------------------------------------------------------------------------------------
+Total              0.0000 uW        22.3188 uW     1.1197e+09 pW     1.1420e+03 uW
+1

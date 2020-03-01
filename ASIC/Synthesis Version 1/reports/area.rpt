@@ -1,0 +1,72 @@
+ 
+****************************************
+Report : area
+Design : aes
+Version: H-2013.03-SP1
+Date   : Thu Mar  1 08:15:26 2018
+****************************************
+
+Library(s) Used:
+
+    saed32hvt_ss0p7vn40c (File: /home/cadence/Desktop/synthesis_1/saed32hvt_ss0p7vn40c.db)
+
+Number of ports:                          387
+Number of nets:                          1693
+Number of cells:                          916
+Number of combinational cells:            653
+Number of sequential cells:               261
+Number of macros/black boxes:               0
+Number of buf/inv:                        346
+Number of references:                      25
+
+Combinational area:              31399.237054
+Buf/Inv area:                     7287.579293
+Noncombinational area:            1724.621241
+Macro/Black Box area:                0.000000
+Net Interconnect area:            5932.114416
+
+Total cell area:                 33123.858295
+Total area:                      39055.972711
+
+The above information was reported from the logical library. The following are from the physical library:
+
+Hierarchical area distribution
+------------------------------
+
+                                  Global cell area            Local cell area
+                                  -------------------  ----------------------------- 
+Hierarchical cell                 Absolute    Percent  Combi-      Noncombi-  Black-
+                                  Total       Total    national    national   boxes   Design
+--------------------------------  ----------  -------  ----------  ---------  ------  ----------------
+aes                               33123.8583    100.0   1470.9855  1724.6212  0.0000  aes
+adk_0                               553.0173      1.7    553.0173     0.0000  0.0000  add_round_keys_0
+r1                                29375.2342     88.7    917.4598     0.0000  0.0000  round
+r1/adk                              949.4820      2.9    949.4820     0.0000  0.0000  add_round_keys_1
+r1/mc                              2871.5730      8.7   2871.5730     0.0000  0.0000  Mix_Column
+r1/sb                             18917.4628     57.1      2.5414     0.0000  0.0000  subbytes
+r1/sb/sb1                          1189.3939      3.6   1189.3939     0.0000  0.0000  sbox_16
+r1/sb/sb10                         1163.7254      3.5   1163.7254     0.0000  0.0000  sbox_7
+r1/sb/sb11                         1210.4879      3.7   1210.4879     0.0000  0.0000  sbox_6
+r1/sb/sb12                         1183.8028      3.6   1183.8028     0.0000  0.0000  sbox_5
+r1/sb/sb13                         1181.0072      3.6   1181.0072     0.0000  0.0000  sbox_4
+r1/sb/sb14                         1156.3552      3.5   1156.3552     0.0000  0.0000  sbox_3
+r1/sb/sb15                         1194.7309      3.6   1194.7309     0.0000  0.0000  sbox_2
+r1/sb/sb16                         1188.1232      3.6   1188.1232     0.0000  0.0000  sbox_1
+r1/sb/sb2                          1177.1950      3.6   1177.1950     0.0000  0.0000  sbox_15
+r1/sb/sb3                          1202.1011      3.6   1202.1011     0.0000  0.0000  sbox_14
+r1/sb/sb4                          1186.3442      3.6   1186.3442     0.0000  0.0000  sbox_13
+r1/sb/sb5                          1200.3221      3.6   1200.3221     0.0000  0.0000  sbox_12
+r1/sb/sb6                          1171.8580      3.5   1171.8580     0.0000  0.0000  sbox_11
+r1/sb/sb7                          1167.5375      3.5   1167.5375     0.0000  0.0000  sbox_10
+r1/sb/sb8                          1173.1287      3.5   1173.1287     0.0000  0.0000  sbox_9
+r1/sb/sb9                          1168.8083      3.5   1168.8083     0.0000  0.0000  sbox_8
+r1/sr                                 0.0000      0.0      0.0000     0.0000  0.0000  shift_rows
+r1/x                               5719.2566     17.3   1215.3166     0.0000  0.0000  keygen
+r1/x/a1                            1141.3607      3.4   1141.3607     0.0000  0.0000  sbox_0
+r1/x/a2                            1137.0403      3.4   1137.0403     0.0000  0.0000  sbox_19
+r1/x/a3                            1112.1341      3.4   1112.1341     0.0000  0.0000  sbox_18
+r1/x/a4                            1113.4049      3.4   1113.4049     0.0000  0.0000  sbox_17
+--------------------------------  ----------  -------  ----------  ---------  ------  ----------------
+Total                                                  31399.2371  1724.6212  0.0000
+
+1

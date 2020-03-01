@@ -1,0 +1,49 @@
+Information: Changed wire load model for 'add_round_keys' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'Mix_Column' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'shift_rows' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'subbytes' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'sbox' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'keygen' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'round' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'add_round_keys' from '(none)' to 'ForQA'. (OPT-170)
+Information: Updating graph... (UID-83)
+Warning: Design 'aes' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+ 
+****************************************
+Report : clocks
+Design : aes
+Version: H-2013.03-SP1
+Date   : Thu Mar  1 08:08:50 2018
+****************************************
+
+Attributes:
+    d - dont_touch_network
+    f - fix_hold
+    p - propagated_clock
+    G - generated_clock
+    g - lib_generated_clock
+
+Clock          Period   Waveform            Attrs     Sources
+--------------------------------------------------------------------------------
+clk             24.00   {0 12}                        {clk}
+--------------------------------------------------------------------------------
+1
