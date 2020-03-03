@@ -6,7 +6,7 @@
 // Create Date: 02/11/2020 11:01:08 PM
 // Design Name:  Emad Masri 
 // Module Name: cde
-// Project Name:  cam_ decryption an encryption
+// Project Name:  cam_ decryption and encryption
 // Target Devices: 
 // Tool Versions: 
 // Description: 

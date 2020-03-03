@@ -14,7 +14,6 @@ module FSM(
     output reg  pass_enc_reg,
     output reg  new_old_pass_sel,
     output reg  plain_reg,
-    output reg  key_reg,
     output reg  out_reg,
     output reg  flash_acc_reg,
     output reg  flash_pass_reg,
@@ -62,7 +61,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -83,7 +82,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -110,7 +109,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -131,7 +130,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -152,7 +151,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -173,7 +172,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -201,7 +200,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -222,7 +221,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -243,7 +242,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -268,7 +267,7 @@ module FSM(
                 pass_enc_reg <= 1;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -289,7 +288,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 1;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -310,7 +309,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 1;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -331,7 +330,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -354,7 +353,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 1;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -375,7 +374,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -398,7 +397,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 1;
                 flash_pass_reg <= 1;
@@ -420,7 +419,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -441,7 +440,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                key_reg <= 0;
+                 
                 out_reg <= 1;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
