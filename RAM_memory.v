@@ -20,23 +20,33 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module RAM_memory(out, addr, CS);
-output[3:0] out;
-input[3:0] addr;
-input CS;
-reg [3:0] out;
-reg [3:0] ROM[3:0];
-always @(posedge CS)
-begin
-ROM[0]=4'h5; ROM[1]=15;
-ROM[2]=4'h1; ROM[3]=10;
-ROM[4]=4'h1; ROM[5]=7;
-ROM[6]=4'h1; ROM[7]=6;
-ROM[8]=4'h1; ROM[9]=9;
-ROM[10]=13; ROM[11]=8;
-ROM[12]=10; ROM[13]=11;
-ROM[14]=12; ROM[15]=11;
-out=ROM[addr];
-end
+module RAM_memory(
+	input [255:0] data,
+	input [3:0] addr,
+	input we, clk,
+	output [255:0] q
+);
 
+	// Declare the RAM variable
+	reg [255:0] ram[15:0];
+	
+	// Variable to hold the registered read address
+	reg [3:0] addr_reg;
+	
+	always @ (posedge clk)
+	begin
+	// Write
+		if (we)
+			ram[addr] <= data;
+		
+		addr_reg <= addr;
+		
+	end
+		
+	// Continuous assignment implies read returns NEW data.
+	// This is the natural behavior of the TriMatrix memory
+	// blocks in Single Port mode.  
+	assign q = ram[addr_reg];
+	
 endmodule
+

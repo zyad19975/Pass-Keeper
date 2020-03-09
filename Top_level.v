@@ -65,7 +65,7 @@ module Top_level(
             .ready_encryption(ready_encryption),
             .write_data_flash(write_data_flash),
             .add_flash(add_flash),
-            .final_output(out_reg)
+            .final_output(password_enc)
             );
 
     FSM  L2(
