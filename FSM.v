@@ -30,7 +30,7 @@ module FSM(
     parameter waiting = 6,          go_state = 7,           check_match = 8;
     parameter matched = 9,          decrypt_start = 10,     encrypt_master = 11;
     parameter wait_enc = 12,        not_matched = 13,       encrypt_load = 14; 
-    parameter wait_encrypt = 15,    falsh_write = 16,       out = 17;
+    parameter wait_encrypt = 15,    falsh_write = 16,       out = 17, add_icrement = 18;
     
     integer i;
     assign address_out = i;
@@ -391,7 +391,7 @@ module FSM(
             begin
                 boot_load_reg <= 0;
                 cam_write_en <= 0;
-                flash_write_en <= 1;
+                flash_write_en <= 0;
                 flash_or_acc_sel <= 0;
                 flash_or_acc_reg <= 0;
                 pass_enc_reg <= 0;
@@ -410,10 +410,10 @@ module FSM(
 
             falsh_write:
             begin
-                i = i + 1;
+                
                 boot_load_reg <= 0;
                 cam_write_en <= 1;
-                flash_write_en <= 0;
+                flash_write_en <= 1;
                 flash_or_acc_sel <= 0;
                 flash_or_acc_reg <= 1;
                 pass_enc_reg <= 0;
@@ -426,10 +426,30 @@ module FSM(
                 local_master_sel <= 0;
                 local_master_reg <= 0;
                 done <= 0;
-                nextstate <= matched;
+                nextstate <=  add_icrement;
             end
-
-
+          
+            add_icrement:
+                begin
+                boot_load_reg <= 0;
+                cam_write_en <= 0;
+                flash_write_en <= 0;
+                flash_or_acc_sel <= 0;
+                flash_or_acc_reg <= 0;
+                pass_enc_reg <= 0;
+                new_old_pass_sel <= 0;
+                plain_reg <= 0;
+                           
+                out_reg <= 0;
+                flash_acc_reg <= 0;
+                flash_pass_reg <= 0;
+                local_master_sel <= 0;
+                local_master_reg <= 0;
+                done <= 0;
+                nextstate <=  matched;
+                i = i + 1;
+            end
+            
             out:
             begin
                 boot_load_reg <= 0;

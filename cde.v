@@ -93,7 +93,7 @@ module cde( input clk,
         cam_inst(
        .clk(clk),
        .rst(rst),
-      .write_enable(write_en),
+       .write_enable(write_en),
        .din(out_reg_flash_or_acc),
         .cmp_din(cmp_din),
         .write_addr(write_add),
