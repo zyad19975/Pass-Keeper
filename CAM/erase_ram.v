@@ -8,7 +8,7 @@ assign erase = 1 -** also can be used as a busy signal **-
 
 module erase_ram #
 (
-    parameter DATA_WIDTH = 8,
+    parameter DATA_WIDTH = 128,
     parameter ADDR_WIDTH = 2        
 )
 (

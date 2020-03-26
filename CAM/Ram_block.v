@@ -6,8 +6,8 @@
  */
 module ram_dp #
 (
-    parameter DATA_WIDTH = 8,
-    parameter ADDR_WIDTH = 2        
+    parameter DATA_WIDTH = 4,
+    parameter ADDR_WIDTH = 4       
 )
 (
     input  wire                    clk,
