@@ -32,7 +32,7 @@ module FSM(
     parameter wait_enc = 12,        not_matched = 13,       encrypt_load = 14; 
     parameter wait_encrypt = 15,    falsh_write = 16,       out = 17, add_icrement = 18;
     
-    integer i;
+    reg [3:0] i;
     assign address_out = i;
     always @(posedge clk, posedge rst)
     begin
@@ -419,7 +419,6 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
-                 
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -438,8 +437,7 @@ module FSM(
                 flash_or_acc_reg <= 0;
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
-                plain_reg <= 0;
-                           
+                plain_reg <= 0;  
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -447,7 +445,7 @@ module FSM(
                 local_master_reg <= 0;
                 done <= 0;
                 nextstate <=  matched;
-                i = i + 1;
+                i <= i + 1;
             end
             
             out:
@@ -467,6 +465,7 @@ module FSM(
                 local_master_sel <= 0;
                 local_master_reg <= 0;
                 done <= 1;
+                nextstate <= idle;
             end
         endcase
 

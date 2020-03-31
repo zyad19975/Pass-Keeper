@@ -24,6 +24,7 @@ module RAM_memory(
 	input [255:0] data,
 	input [3:0] addr,
 	input we, clk,
+	input rst,
 	output [255:0] q
 );
 
@@ -32,10 +33,15 @@ module RAM_memory(
 	
 	// Variable to hold the registered read address
 	reg [3:0] addr_reg;
-	
+	integer i;
 	always @ (posedge clk)
 	begin
 	// Write
+	   if (rst) begin 
+	   for (i = 0 ;i < (16) ; i = i+1 ) begin
+           ram[i] = 0;     
+           end
+	   end
 		if (we)
 			ram[addr] <= data;
 		

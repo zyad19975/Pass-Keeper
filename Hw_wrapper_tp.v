@@ -4,13 +4,13 @@ module Hw_wrapper_tp();
     reg go;
     reg rst;
     reg [127:0] master_key;
-    reg [127:0] account;
-    reg [127:0] password;
-    reg [3:0]   max_address;
+    reg [15:0] account;
+    reg [15:0] password;
+    reg [15:0]   max_address;
     
-    wire [255:0] data_flash;
-    wire[127:0] password_enc;
-    wire [255:0] write_data_flash;
+    wire [31:0] data_flash;
+    wire[15:0] password_enc;
+    wire [31:0] write_data_flash;
     wire [3:0] add_flash;
     wire done;
     wire flash_write;
@@ -53,8 +53,8 @@ module Hw_wrapper_tp();
             #100
             rst = 0;
             master_key = 128'hf256847daea39da5d870adf56971236;
-            password   = 128'hf256847daaa39da5d870adf56971236;
-            account    = 128'h0000000000000000000000000000000;
+            password   = 16'h1236;
+            account    = 16'h0000;
             #500
             go = 1;
             #200
