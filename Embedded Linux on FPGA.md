@@ -1,4 +1,4 @@
-# Embedded Linux on FPGA
+# Embedded Linux on FPGA Zybo-Zynq7000 
 
 ## Git required files
 
@@ -52,4 +52,32 @@ Just make sure that you are in the right branch
 ```bash
 $ git checkout branch_name
 ```
+## Star configure your image
 
+```bash
+$ source oe-init-build-env
+```
+this command will move you to build directory
+then you have to edit these two files 
+
+conf/local.conf
+conf/bblayers.conf
+
+in local.conf find the line that specifies the machine time and comment it and replace it with our machine name
+
+#### MACHINE ?= "zybo-zynq7" 
+
+in bblayers.conf add these two lines below the existing ones
+
+### /home/eepraxis/poky/meta-xilinx-bsp \
+### /home/eepraxis/poky/meta-openembedded/meta-oe \
+
+after that you are now can run bitbake command
+
+```bash
+$ bitbake core-image-minimal
+```
+## wait for the building to finish 
+this will take a few hours depending on your computer and internet connection
+
+after that, all the image files needed will be created 
