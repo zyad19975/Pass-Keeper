@@ -1,3 +1,4 @@
+
 module aes(
 	input wire[127:0]plaintext,
 	input wire[127:0]key,
@@ -42,19 +43,18 @@ module aes(
              begin
            adk_in <= out;
            key_round <=keyout;
-           if(round_number == 10)
-                 begin
-                     ready <= 1;
-                 end
              end
            
            round_number <= round_number + 1;
 
      end
+     else if(round_number == 10)
+                 begin
+                     ready <= 1;
+                 end
       
   
     end
-//add round key 
 
   
  

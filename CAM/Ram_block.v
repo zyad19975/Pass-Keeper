@@ -6,14 +6,14 @@
  */
 module ram_dp #
 (
-    parameter DATA_WIDTH = 8,
-    parameter ADDR_WIDTH = 2        
+    parameter DATA_WIDTH = 4,
+    parameter ADDR_WIDTH = 4       
 )
 (
     input  wire                    clk,
     input  wire                    rst,
     input  wire                    write,
-    input  wire                    erase,
+
 
     // port A
     input  wire [ADDR_WIDTH-1:0]   a_addr,
@@ -48,14 +48,10 @@ always@(posedge clk) begin
     end
     end
 end
-always@(write or erase) begin
+always@(clk) begin
     if (write) begin
-       
-            mem[a_din][a_addr] <= 1'b0;
-    end 
-    else if (erase)  begin
             mem[a_din][a_addr] <= 1'b1;
-    end
+    end 
 end
 
 endmodule

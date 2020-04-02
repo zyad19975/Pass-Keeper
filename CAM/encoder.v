@@ -14,8 +14,7 @@ module encoder #
 (
     input  wire [WIDTH-1:0]         input_unencoded,
     output wire                     output_valid,
-    output wire [$clog2(WIDTH)-1:0] output_encoded,
-    output wire [WIDTH-1:0]         output_unencoded
+    output wire [$clog2(WIDTH)-1:0] output_encoded
 );
 
 // power-of-two width
@@ -71,8 +70,5 @@ generate
         end
     end
 endgenerate
-
-// unencoded output
-assign output_unencoded = 1 << output_encoded;
 
 endmodule

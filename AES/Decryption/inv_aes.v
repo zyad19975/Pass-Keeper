@@ -14,11 +14,13 @@ Description :
 	-The output of each inv_round (state and keyout) is the input of the next inv_round
 */
 
+
+
 module inv_aes(
 	input wire[127:0]plaintext1,
 	input wire[127:0]key,
-	output reg[127:0]cipher_text,
-	output reg[127:0] keyout 
+	output reg[127:0]cipher_text
+	//output reg[127:0] keyout 
 );
 wire [0:127]keys[0:10];
 wire[127:0]plaintext;
@@ -90,7 +92,7 @@ inv_round r10 (out9,1'b1,keys[10-10],out10);
 always @*
 begin
 cipher_text=out10;
-keyout=keys[10];
+//keyout=keys[10];
 end
 
 
