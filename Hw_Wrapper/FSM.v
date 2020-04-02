@@ -27,10 +27,10 @@ module FSM(
     reg [4:0] nextstate;
     parameter start = 0,            boot = 1,               load_cam = 2;
     parameter busy_cam = 3,         boot_done = 4,          idle = 5;
-    parameter waiting = 6,          go_state = 7,           check_match = 8;
+    parameter add_icrement = 6,          go_state = 7,           check_match = 8;
     parameter matched = 9,          decrypt_start = 10,     encrypt_master = 11;
     parameter wait_enc = 12,        not_matched = 13,       encrypt_load = 14; 
-    parameter wait_encrypt = 15,    falsh_write = 16,       out = 17, add_icrement = 18;
+    parameter wait_encrypt = 15,    falsh_write = 16,       out = 17;
     
     reg [3:0] i;
     assign address_out = i;
@@ -183,33 +183,8 @@ module FSM(
                 begin
                     nextstate <= go_state;
                 end
-                else
-                begin
-                    nextstate <= waiting;
-                end
+                
             end
-
-
-            waiting:
-            begin
-                boot_load_reg <= 0;
-                cam_write_en <= 0;
-                flash_write_en <= 0;
-                flash_or_acc_sel <= 0;
-                flash_or_acc_reg <= 0;
-                pass_enc_reg <= 0;
-                new_old_pass_sel <= 0;
-                plain_reg <= 0;
-                 
-                out_reg <= 0;
-                flash_acc_reg <= 0;
-                flash_pass_reg <= 0;
-                local_master_sel <= 0;
-                local_master_reg <= 0;
-                done <= 0;
-                nextstate <= idle;
-            end
-
 
             go_state:
             begin

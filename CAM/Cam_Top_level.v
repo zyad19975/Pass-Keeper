@@ -6,37 +6,22 @@
  */
 module cam #(
     // search data bus width
-    parameter DATA_WIDTH = 4,
-
+    parameter DATA_WIDTH  = 4,
     // memory size in log2(words)
-    parameter ADDR_WIDTH = 2,
-
+    parameter ADDR_WIDTH  = 2,
     parameter SLICE_WIDTH = 4
-    
-
 )
 (
     input  wire                     clk,
     input  wire                     rst,
-    
     //Write bit to enable writing operation
     input  wire                     write_enable,
-
     //Input data to be look up to
     input wire [DATA_WIDTH-1 : 0]   din,
-
-    //used as input data in case of write operation
-    input wire [DATA_WIDTH-1 : 0]   cmp_din,
-
     //write addres at writing operation
     input wire [ADDR_WIDTH-1 : 0]   write_addr,
-
-    // This signal Indicates that a write operation is currently being executed. 
-    output wire                     busy,
-
     //A matching address is found
     output wire                     match,
-
     //the matched address
     output wire [ADDR_WIDTH-1:0]    match_addr
     );
@@ -44,34 +29,10 @@ module cam #(
 localparam SLICE_COUNT = (DATA_WIDTH + SLICE_WIDTH - 1) / SLICE_WIDTH;
 
 
-wire busy_signal;
-assign busy = busy_signal;
-
-wire [DATA_WIDTH-1 : 0] Data_select;
-assign Data_select = (write_enable)? cmp_din : din;
-
-
-wire [DATA_WIDTH-1 : 0] Data_Write_select;
-wire [DATA_WIDTH-1 : 0] Data_Write_erase;
-assign Data_Write_select = (write_enable)? Data_Write_erase : din;
 
 wire [(2**ADDR_WIDTH)-1:0] match_addr_unencoded;
 wire [(2**ADDR_WIDTH)-1:0] match_addr_unencoded_raw [SLICE_COUNT : 0];
 
-erase_ram #(
-    .DATA_WIDTH (DATA_WIDTH),
-    .ADDR_WIDTH (ADDR_WIDTH)        
-)
-erase_ram_inst(
-    .clk(clk),
-    .rst(rst),
-    .write(write_enable),
-    .erase(busy_signal),
-
-    .addr(write_addr),
-    .Data_out(Data_Write_erase),
-    .Data_in(din)
-);
 
 genvar slice_ind;
 generate
@@ -88,15 +49,13 @@ ram_dp_inst(
     .clk(clk),
     .rst(rst),
     .write(write_enable),
-    .erase(busy_signal),
 
     // port A
     .a_addr(write_addr),
-    .a_din(Data_Write_select[start +: W]),
-
+    .a_din(din[start +: W]),
 
     // port B
-    .b_din(Data_select[start +: W]),
+    .b_din(din[start +: W]),
     .b_dout(match_addr_unencoded_raw[slice_ind])
 );
 end

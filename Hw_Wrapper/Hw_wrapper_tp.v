@@ -4,13 +4,12 @@ module Hw_wrapper_tp();
     reg go;
     reg rst;
     reg [127:0] master_key;
-    reg [15:0] account;
-    reg [15:0] password;
-    reg [15:0]   max_address;
-    
-    wire [31:0] data_flash;
-    wire[15:0] password_enc;
-    wire [31:0] write_data_flash;
+    reg [127:0] account;
+    reg [127:0] password;
+    reg [3:0]   max_address;
+    wire [255:0] data_flash;
+    wire[127:0] password_enc;
+    wire [255:0] write_data_flash;
     wire [3:0] add_flash;
     wire done;
     wire flash_write;
@@ -20,6 +19,7 @@ module Hw_wrapper_tp();
         .addr(add_flash),
         .we(flash_write),
         .clk(clk),
+        .rst(rst),
         .q(data_flash)
     );
     Top_level R1(
@@ -44,20 +44,34 @@ module Hw_wrapper_tp();
        clk = ~clk;
     end
     
-    
     initial
             begin
             clk = 0;
             rst = 1;
+            master_key = 128'h00000000000000000000000000000000;
+            password   = 128'h00000000000000000000000000000000;
+            account    = 128'h00000000000000000000000000000000;
             max_address = 0;
+            go = 0;
             #100
             rst = 0;
-            master_key = 128'hf256847daea39da5d870adf56971236;
-            password   = 16'h1236;
-            account    = 16'h0000;
+            master_key = 128'hf256847daea39da5d870adf569712360;
+            password   = 128'hf256847daaa39da5d870adf569712360;
+            account    = 128'h00000000000000000000000000000000;
             #500
             go = 1;
-            #200
+            #100
             go = 0;
+            #1500
+            account    = 128'haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
+            go = 1;
+            #100
+            go = 0;
+            #1500
+            account    = 128'h00000000000000000000000000000000;
+            go = 1;
+            #100          
+            go = 0;
+                        
             end
 endmodule

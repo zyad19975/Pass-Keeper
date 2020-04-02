@@ -8,12 +8,8 @@ module CAM_tp ;
     reg           write_enable;
     //Input data to be look up to
     reg [127 : 0]   din;
-    //used as input data in case of write operation
-    reg [127 : 0]   cmp_din;
     //write addres at writing operation
     reg [5 : 0]   write_addr;
-    // This signal Indicates that a write operation is currently being executed. 
-    wire          busy;
     //A matching address is found
     wire          match;
     //the matched address
@@ -33,9 +29,7 @@ module CAM_tp ;
     .rst(rst),
     .write_enable(write_enable),
     .din(din),
-    .cmp_din(cmp_din),
     .write_addr(write_addr),
-    .busy(busy),
     .match(match),
     .match_addr(match_addr)
     );

@@ -1,23 +1,4 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 02/11/2020 11:01:08 PM
-// Design Name:  Emad Masri 
-// Module Name: cde
-// Project Name:  cam_ decryption and encryption
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies:  
-// Revision: 1
-
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module cde( input clk,
             input rst,
@@ -66,8 +47,6 @@ module cde( input clk,
     wire [127:0] out_local_master_reg;
     ///////////////
     wire [127:0] out_flash_pass_reg;
-    wire [127:0] cmp_din;
-    wire  busy;
     ///////////////
    assign  out_flash_or_acc_sel = (flash_or_acc_sel ) ? account :  data_flash[127:0]   ; // select between data flash  or acc
    assign add_flash = (boot_lood)? match_add :  write_add  ; // select from write add or match_add in case boot or lood from flash in cam
@@ -89,18 +68,16 @@ module cde( input clk,
        .DATA_WIDTH(128),
       
         .ADDR_WIDTH(ADDR_WIDTH)
-       )
-        cam_inst(
-       .clk(clk),
-       .rst(rst),
-       .write_enable(write_en),
-       .din(out_reg_flash_or_acc),
-        .cmp_din(cmp_din),
-        .write_addr(write_add),
-        .busy(busy),
-       .match(match),
-       .match_addr(match_add)
- ); 
+      )
+      cam_inst(
+         .clk(clk),
+         .rst(rst),
+         .write_enable(write_en),
+         .din(account),
+         .write_addr(write_add),
+         .match(match),
+         .match_addr(match_add)
+      ); 
     //////////////////////////////////////////////////////////////////////////
     aes ENC (
         
