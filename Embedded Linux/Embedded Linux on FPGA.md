@@ -100,7 +100,20 @@ Sep 5 10:31:00 kernel: sd 1:0:0:0: Attached scsi generic sg0 type 0
 The output may vary slightly, but the point here is to see what name the kernel gave
 the new disk. “sdc” in the example above.
 
-use fdisk command to format your sd card int to particions:
+use fdisk command to format your sd card int to partisions:
 first with 1 Gb space and FAT32 format this will be the Boot dir
 second with the rest of the sd card space and with NTFS format this will be root dir
 
+mount the two partisions to a tmp dir to copy files to them 
+
+```bash
+$ mkdir /tmp/boot
+$ sudo mount /tmp/boot /dev/sdc1
+
+$ mkdir /tmp/Root
+$ sudo mount /tmp/Root /dev/sdc2
+```
+
+copy the boot files to boot dir and linux_image files to root dir
+
+unmount the two dir then remove the sd card and plug it in the fpga
