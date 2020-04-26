@@ -52,7 +52,7 @@ Just make sure that you are in the right branch
 ```bash
 $ git checkout branch_name
 ```
-## Star configure your image
+## Start configure your image
 
 ```bash
 $ source oe-init-build-env
@@ -81,3 +81,26 @@ $ bitbake core-image-minimal
 this will take a few hours depending on your computer and internet connection
 
 after that, all the image files needed will be created 
+
+
+### Last step is to burn the image on the sd
+
+It’s important to detect the correct device as the SD card. This is best done by plugging in the USB connector, and looking for something like this is the main log file (/var/log/messages or /var/log/syslog)
+
+```bash
+Sep 5 10:30:59 kernel: sd 1:0:0:0: [sdc] 7813120 512-byte logical blocks
+Sep 5 10:30:59 kernel: sd 1:0:0:0: [sdc] Write Protect is off
+Sep 5 10:30:59 kernel: sd 1:0:0:0: [sdc] Assuming drive cache: write through
+Sep 5 10:30:59 kernel: sd 1:0:0:0: [sdc] Assuming drive cache: write through
+Sep 5 10:30:59 kernel: sdc: sdc1
+Sep 5 10:30:59 kernel: sd 1:0:0:0: [sdc] Assuming drive cache: write through
+Sep 5 10:30:59 kernel: sd 1:0:0:0: [sdc] Attached SCSI removable disk
+Sep 5 10:31:00 kernel: sd 1:0:0:0: Attached scsi generic sg0 type 0
+```
+The output may vary slightly, but the point here is to see what name the kernel gave
+the new disk. “sdc” in the example above.
+
+use fdisk command to format your sd card int to particions:
+first with 1 Gb space and FAT32 format this will be the Boot dir
+second with the rest of the sd card space and with NTFS format this will be root dir
+
