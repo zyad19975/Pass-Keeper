@@ -23,11 +23,10 @@ work/_lib1_0.qdb
 work/_lib1_0.qpg
 work/_info
 work/_lib.qdb
-AES/Encryption/vsim.wlf
 AES/Encryption/transcript
-CAM/work/_lib1_7.qdb
 CAM/transcript
-CAM/vsim.wlf
-CAM/work/_lib1_7.qpg
-CAM/work/_lib1_7.qtl
+*.wlf
+*.qpg
+*.qtl
 transcript
+*.qdb
