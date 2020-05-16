@@ -30,3 +30,6 @@ CAM/transcript
 *.qtl
 transcript
 *.qdb
+Hw_Wrapper/work/_vmake
+Hw_Wrapper/work/_info
+Hw_Wrapper/test.v
