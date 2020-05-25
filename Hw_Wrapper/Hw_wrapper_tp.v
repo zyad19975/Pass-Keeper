@@ -42,23 +42,23 @@ module Hw_wrapper_tp();
             go = 0;
             #100
             rst = 0;
-            master_key = 128'hf256847daea39da5d870adf569712360;
-            password   = 128'hf256847daaa39da5d870adf569712360;
+            master_key = 128'h5468617473206D79204B756E67204675;
+            password   = 128'h54776F204F6E65204E696E652054776F;
             account    = 128'h00000000000000000000000000000000;
             #500
             go = 1;
             #100
             go = 0;
-            #1500
-            account    = 128'haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
+            #3000
+            account    = 128'h00000000000000000000000000000000;
             go = 1;
             #100
             go = 0;
-            #1500
+            /*#1500
             account    = 128'h00000000000000000000000000000000;
             go = 1;
             #100          
-            go = 0;
+            go = 0;*/
                         
             end
 endmodule

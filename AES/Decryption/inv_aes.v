@@ -1,99 +1,160 @@
-/*
-* ------AES Top Module------
-Inputs :
-	1- PlainText -128 bit wire- (which is sometimes refered to as State)
-	2- Key  -128 bit wire-
-Outputs : 
-	1- CipherText -128 bit register- 
-	2- keyout -128 bit- the final key that have passed by all the shifts 
-	   (used for testing in AES decryption) 
- 	   
-Description :
-	-AES Top Module consists of an initial ADD inv_round Key, 9 similar inv_rounds
-	 and a last inv_round
-	-The output of each inv_round (state and keyout) is the input of the next inv_round
-*/
-
-
-
-module inv_aes(
-	input wire[127:0]plaintext1,
-	input wire[127:0]key,
-	output reg[127:0]cipher_text
-	//output reg[127:0] keyout 
-);
-wire [0:127]keys[0:10];
-wire[127:0]plaintext;
-assign keys[0]=key;
-assign plaintext=plaintext1;
-
-inv_keygen as1(4'h1,keys[0],keys[1]);
-inv_keygen as2(4'h2,keys[1],keys[2]);
-inv_keygen as3(4'h3,keys[2],keys[3]);
-inv_keygen as4(4'h4,keys[3],keys[4]);
-inv_keygen as5(4'h5,keys[4],keys[5]);
-inv_keygen as6(4'h6,keys[5],keys[6]);
-inv_keygen as7(4'h7,keys[6],keys[7]);
-inv_keygen as8(4'h8,keys[7],keys[8]);
-inv_keygen as9(4'h9,keys[8],keys[9]);
-inv_keygen as10(4'ha,keys[9],keys[10]);
-//add inv_round key 
-wire [127:0] adk_out0;
-inv_add_round_keys adk_0(plaintext, keys[10-0], adk_out0);
-
-//inv_round 1
-
-wire [127:0] out1;
-inv_round r1 (adk_out0,1'b0,keys[10-1],out1);
-
-//inv_round 2dd
-
-wire [127:0] out2;
-inv_round r2 (out1,1'b0,keys[10-2],out2);
-
-//inv_round 3
-
-wire [127:0] out3;
-inv_round r3 (out2,1'b0,keys[10-3],out3);
-
-//inv_round 4
-
-wire [127:0] out4;
-inv_round r4 (out3,1'b0,keys[10-4],out4);
-
-//inv_round 5
-
-wire [127:0] out5;
-inv_round r5 (out4,1'b0,keys[10-5],out5);
-
-//inv_round 6
-
-wire [127:0] out6;
-inv_round r6 (out5,1'b0,keys[10-6],out6);
-
-//inv_round 7
-
-wire [127:0] out7;
-inv_round r7 (out6,1'b0,keys[10-7],out7);
-
-//inv_round 8
-wire [127:0] out8;
-inv_round r8 (out7,1'b0,keys[10-8],out8);
-//inv_round 9
-
-wire [127:0] out9;
-inv_round r9 (out8,1'b0,keys[10-9],out9);
-
-//inv_round 10
-
-wire [127:0] out10;
-inv_round r10 (out9,1'b1,keys[10-10],out10);
-
-always @*
-begin
-cipher_text=out10;
-//keyout=keys[10];
-end
-
-
-endmodule
+ 
+ module inv_aes(
+     input clk , rest ,
+     input start,
+     input wire[127:0]plaintext1,
+     input wire[127:0]local_key,
+     output reg[127:0]cipher_text,
+     output reg done, 
+     output reg busy
+     //output reg[127:0] keyout 
+ );
+ localparam [3:0] // 3 states are required for Moore
+         R_0 = 0,
+         R_1 = 1, 
+         R_2 = 2,   
+         R_3 = 3,   
+         R_4 = 4,   
+         R_5 = 5,   
+         R_6 = 6,   
+         R_7 = 7,   
+         R_8 = 8,   
+         R_9 = 9,   
+         R_10 = 10,   
+         R_11 = 11,  
+         R_12=12,
+         R_idel=13;
+ 
+ reg [3:0] state ;
+ reg last;
+ reg  [3:0] rount_no ;
+ wire [127:0]plaintext;
+ wire [127:0] key_round;
+ reg  [127:0] keys1;
+ reg [127:0] adk_out;
+ reg [127:0] adk_out1;
+  wire done_k;
+        // inv_add_round_keys adk_0(plaintext, keys, adk_out0);
+     
+          wire [127:0] out1;
+          inv_round r1 (adk_out,last  , keys1,out1);          
+ assign plaintext = plaintext1;
+ 
+ 
+ Get_key as1(clk , rest , local_key , rount_no , key_round , done_k ); 
+ 
+ 
+ reg flag;
+ 
+ always @(posedge clk)
+     begin
+       
+       if (rest )
+           begin
+             rount_no = 10;
+             last = 0 ;
+            state <= R_idel;
+            busy <=0;
+            done <=0;
+            flag <=0;
+           end
+      else if (start && done_k && !busy )
+      begin
+         state <=R_11;
+         flag <=1;
+         busy <=1;
+         end  
+      else if (flag ) begin
+                   
+                           case (state)
+                                R_11 : begin
+                                            state <=R_12;
+                                            rount_no <=9;
+                                            
+                                            end  
+                                    R_12: begin 
+                                             
+                                            adk_out1 <=key_round^ plaintext;
+                                            state <=R_0;
+                                            rount_no <=8;
+                                          end 
+                                   R_0: begin 
+                                         
+                                            rount_no <=7;
+                                            keys1 <= key_round;
+                                            adk_out <= adk_out1;
+                                            state <=R_1;
+                                         end
+                                   R_1: begin 
+                                           rount_no <=6;
+                                           keys1 <= key_round;
+                                           adk_out <= out1;
+                                           state <=R_2;
+                                         end
+                                    R_2: begin 
+                                            rount_no <=5;
+                                            keys1 <= key_round;
+                                            adk_out <= out1;
+                                            state <=R_3;
+                                         end   
+                                   R_3: begin 
+                                            rount_no <=4;
+                                            keys1 <= key_round;
+                                            adk_out <= out1;
+                                            state <=R_4;
+                                        end                                                                                 
+                                    R_4: begin 
+                                            rount_no <=3;
+                                            keys1 <= key_round;
+                                            adk_out <= out1;
+                                            state <=R_5;
+                                        end     
+                                   R_5: begin 
+                                            rount_no <=2;
+                                            keys1 <= key_round;
+                                            adk_out <= out1;
+                                            state <=R_6;
+                                         end 
+                                   R_6: begin 
+                                            rount_no <=1;
+                                            keys1 <= key_round;
+                                            adk_out <= out1;
+                                            state <=R_7;
+                                        end    
+                                   R_7: begin 
+                                            rount_no <=0;
+                                            keys1 <= key_round;
+                                            adk_out <= out1;
+                                            state <=R_8;
+                                        end  
+                                    R_8: begin 
+                                                        
+                                        keys1 <= key_round;
+                                        adk_out <= out1;
+                                        state <=R_9;
+                                        end   
+                                    R_9: begin 
+                                                           
+                                        keys1 <= key_round;
+                                        adk_out <= out1;
+                                        last <=1;
+                                        state <=R_10;
+                                        end   
+                                    R_10: begin 
+                                        cipher_text <= out1;
+                                        done <=1;
+                                        busy <=0;
+                                      state <=R_idel;
+                                     end                      
+                                                                                                                                                                                                                                                                                                                                                    
+                           endcase    
+           end
+           
+  
+     end
+     
+        
+         
+         
+         
+ endmodule

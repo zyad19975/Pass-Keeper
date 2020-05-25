@@ -22,12 +22,15 @@ module Top_level(
     wire plain_reg, local_master_reg, local_master_sel;
     wire out_reg, write_en, boot_lood,match,ready_encryption;
     wire [3:0] write_add;
-
+    wire start_dec,dec_done,start_enc;
     cde L1( .clk(clk),
             .rst(rst),
             .pass(password),
             .master_key (master_key),
             .account(account),
+            .start_dec(start_dec),
+            .dec_done(dec_done),
+            .start_enc(start_enc),
             .data_flash(data_flash),
             .flash_pass_reg(flash_pass_reg),
             .flash_acc_reg(flash_acc_reg),
@@ -56,6 +59,7 @@ module Top_level(
                 .go(go),
                 .enc_done(ready_encryption),
                 .max_add(max_address),
+                .start_enc(start_enc),
                 .boot_load_reg(boot_lood),
                 .cam_write_en(write_en),
                 .flash_write_en(flash_write),
@@ -65,6 +69,8 @@ module Top_level(
                 .new_old_pass_sel(new_old_pass_sel),
                 .plain_reg(plain_reg),
                 .out_reg(out_reg),
+                .start_dec(start_dec),
+                .dec_done(dec_done),
                 .flash_acc_reg(flash_acc_reg),
                 .flash_pass_reg(flash_pass_reg),
                 .local_master_sel(local_master_sel),

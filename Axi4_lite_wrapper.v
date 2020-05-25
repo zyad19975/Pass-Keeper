@@ -1,7 +1,7 @@
 
 `timescale 1 ns / 1 ps
 
-	module pass_keeper_v2_S00_AXI #
+	module pass_keeper_v3_S00_AXI #
 	(
 		// Users to add parameters here
 
@@ -130,9 +130,9 @@
 	reg [C_S_AXI_DATA_WIDTH-1:0]	 reg_data_out;
 	integer	 byte_index;
 	reg	 aw_en;
-    
-    
-    
+
+
+
     //users wires declarations
     wire go;
     wire rst;
@@ -148,6 +148,7 @@
     wire [31:0]o3;
     wire [31:0]o4; 
     //users wires declarations ends
+    
 	// I/O Connections assignments
 
 	assign S_AXI_AWREADY	= axi_awready;
@@ -558,27 +559,27 @@
 	      // Address decoding for reading registers
 	      case ( axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] )
 	        5'h00   : reg_data_out <= slv_reg0;
-	        5'h01   : reg_data_out <= slv_reg1;
-	        5'h02   : reg_data_out <= slv_reg2;
-	        5'h03   : reg_data_out <= slv_reg3;
-	        5'h04   : reg_data_out <= slv_reg4;
-	        5'h05   : reg_data_out <= slv_reg5;
-	        5'h06   : reg_data_out <= slv_reg6;
-	        5'h07   : reg_data_out <= slv_reg7;
-	        5'h08   : reg_data_out <= slv_reg8;
-	        5'h09   : reg_data_out <= slv_reg9;
-	        5'h0A   : reg_data_out <= slv_reg10;
-	        5'h0B   : reg_data_out <= slv_reg11;
-	        5'h0C   : reg_data_out <= slv_reg12;
-	        5'h0D   : reg_data_out <= slv_reg13;
-	        5'h0E   : reg_data_out <= slv_reg14;
-	        5'h0F   : reg_data_out <= slv_reg15;
-	        5'h10   : reg_data_out <= o1;
-	        5'h11   : reg_data_out <= o2;
-	        5'h12   : reg_data_out <= o3;
-	        5'h13   : reg_data_out <= o4;
-	        5'h14   : reg_data_out <= done;
-	        default : reg_data_out <= 0;
+            5'h01   : reg_data_out <= slv_reg1;
+            5'h02   : reg_data_out <= slv_reg2;
+            5'h03   : reg_data_out <= slv_reg3;
+            5'h04   : reg_data_out <= slv_reg4;
+            5'h05   : reg_data_out <= slv_reg5;
+            5'h06   : reg_data_out <= slv_reg6;
+            5'h07   : reg_data_out <= slv_reg7;
+            5'h08   : reg_data_out <= slv_reg8;
+            5'h09   : reg_data_out <= slv_reg9;
+            5'h0A   : reg_data_out <= slv_reg10;
+            5'h0B   : reg_data_out <= slv_reg11;
+            5'h0C   : reg_data_out <= slv_reg12;
+            5'h0D   : reg_data_out <= slv_reg13;
+            5'h0E   : reg_data_out <= slv_reg14;
+            5'h0F   : reg_data_out <= slv_reg15;
+            5'h10   : reg_data_out <= o1;
+            5'h11   : reg_data_out <= o2;
+            5'h12   : reg_data_out <= o3;
+            5'h13   : reg_data_out <= o4;
+            5'h14   : reg_data_out <= done;
+            default : reg_data_out <= 0;
 	      endcase
 	end
 

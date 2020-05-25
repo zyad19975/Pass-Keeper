@@ -2,15 +2,15 @@
 module aes(
 	input wire[127:0]plaintext,
 	input wire[127:0]key,
-  //  output reg[127:0] keyout,
     input clk,
     input reset,
+    input start,
   	output wire[127:0]cipher_text,
     output reg ready
 
  
 );
-  
+  reg d = 0;
   reg[3:0] round_number  ;
   wire [127:0] adk_out0;
   wire [127:0] keyout;
@@ -27,7 +27,7 @@ module aes(
     begin
       if( reset)
      begin
-       round_number <= 0;
+       d = 1;
        ready <= 0;
        
       end
@@ -48,12 +48,22 @@ module aes(
            round_number <= round_number + 1;
 
      end
-     else if(round_number == 10)
-                 begin
-                     ready <= 1;
-                 end
-      
-  
+     else if(round_number == 10 & !d)
+     begin
+     ready <= 1;
+     d <=1;
+     end
+     else if(d)
+         begin
+
+         ready <= 0;
+          if (start)
+                begin
+                 round_number <= 0;
+                 ready <= 0;
+                 d <=0;
+                end
+         end
     end
 
   

@@ -1,4 +1,4 @@
-*module tb ();
+module tb ();
      
      reg clk , rest;
      reg  [127:0] plaintext1,local_key;
