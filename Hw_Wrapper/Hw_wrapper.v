@@ -9,7 +9,8 @@ module Hw_wrapper(
     input [127:0] password,
     input [3:0]   max_address,
     output done,
-    output[127:0] password_enc
+    output[127:0] password_enc,
+    output boot_done_signal
 );
     
     wire [255:0] data_flash;
@@ -38,6 +39,7 @@ module Hw_wrapper(
         .write_data_flash(write_data_flash),
         .add_flash(add_flash),
         .done(done),
-        .flash_write(flash_write)
+        .flash_write(flash_write),
+        .boot_done_signal(boot_done_signal)
         );     
 endmodule

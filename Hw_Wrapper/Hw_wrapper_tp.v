@@ -9,7 +9,7 @@ module Hw_wrapper_tp();
     reg [127:0] password;
     reg [3:0]   max_address;
     wire[127:0] password_enc;
-    wire done;
+    wire done,boot_done_signal;
     
 
     Hw_wrapper hw(
@@ -21,7 +21,8 @@ module Hw_wrapper_tp();
     .password(password),
     .max_address(max_address),
     .done(done),
-    .password_enc(password_enc)
+    .password_enc(password_enc),
+    .boot_done_signal(boot_done_signal)
     );
 
 

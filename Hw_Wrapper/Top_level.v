@@ -14,7 +14,8 @@ module Top_level(
     output [255:0] write_data_flash,
     output [3:0] add_flash,
     output done,
-    output flash_write
+    output flash_write,
+    output boot_done_signal
     );
       
     wire flash_pass_reg, flash_acc_reg,flash_or_acc_reg;
@@ -78,7 +79,8 @@ module Top_level(
                 .local_master_sel(local_master_sel),
                 .local_master_reg(local_master_reg),
                 .done(done),
-                .address_out(write_add) //da el address ele mtwsl b flash w cam f nafs el wa2t
+                .address_out(write_add), //da el address ele mtwsl b flash w cam f nafs el wa2t
+                .boot_done_signal(boot_done_signal)
             );
 
 

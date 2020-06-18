@@ -24,7 +24,8 @@ module FSM(
     output reg  local_master_sel,
     output reg  local_master_reg,
     output reg  done,
-    output reg  [3:0] address_out //da el address ele mtwsl b flash w cam f nafs el wa2t
+    output reg  [3:0] address_out, //da el address ele mtwsl b flash w cam f nafs el wa2t
+    output reg  boot_done_signal
     );
     
     reg [4:0] currentstate;
@@ -75,6 +76,7 @@ module FSM(
                 local_master_sel <= 0;
                 local_master_reg <= 0;
                 done <= 0;
+                boot_done_signal<=0;
                 nextstate <= boot;
             end
 
@@ -98,6 +100,7 @@ module FSM(
                 local_master_sel <= 0;
                 local_master_reg <= 0;
                 done <= 0;
+                boot_done_signal<=0;
                 if (address_out < max_add) begin
                     nextstate <=load_cam;
                 end else begin
@@ -126,6 +129,7 @@ module FSM(
                 local_master_sel <= 0;
                 local_master_reg <= 0;
                 done <= 0;
+                boot_done_signal<=0;
                 nextstate <= busy_cam;
             end
 
@@ -148,6 +152,7 @@ module FSM(
                 local_master_sel <= 0;
                 local_master_reg <= 0;
                 done <= 0;
+                boot_done_signal<=0;
                 nextstate <= boot;
                 address_out = address_out +1;
             end
@@ -171,6 +176,7 @@ module FSM(
                 local_master_sel <= 0;
                 local_master_reg <= 0;
                 done <= 0;
+                boot_done_signal<=1;
                 nextstate <= idle;
             end
 
