@@ -22,9 +22,10 @@ module Top_level(
     wire plain_reg, local_master_reg, local_master_sel;
     wire out_reg, write_en, boot_lood,match,ready_encryption;
     wire [3:0] write_add;
-    wire start_dec,dec_done,start_enc;
+    wire start_dec,dec_done,start_enc,cam_start;
     cde L1( .clk(clk),
             .rst(rst),
+            .cam_start(cam_start),
             .pass(password),
             .master_key (master_key),
             .account(account),
@@ -59,6 +60,7 @@ module Top_level(
                 .go(go),
                 .enc_done(ready_encryption),
                 .max_add(max_address),
+                .cam_start(cam_start),
                 .start_enc(start_enc),
                 .boot_load_reg(boot_lood),
                 .cam_write_en(write_en),

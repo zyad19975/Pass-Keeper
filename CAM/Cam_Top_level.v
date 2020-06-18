@@ -14,6 +14,7 @@ module cam #(
 (
     input  wire                     clk,
     input  wire                     rst,
+    input  wire                     start,
     //Write bit to enable writing operation
     input  wire                     write_enable,
     //Input data to be look up to
@@ -69,5 +70,5 @@ encoder #(
             .output_valid(match),
             .output_encoded(match_addr)
         );
-assign match_addr_unencoded = match_addr_unencoded_raw[0] & match_addr_unencoded_raw[1] & match_addr_unencoded_raw[2] & match_addr_unencoded_raw[3] & match_addr_unencoded_raw[4] & match_addr_unencoded_raw[5] & match_addr_unencoded_raw[6] & match_addr_unencoded_raw[7] & match_addr_unencoded_raw[8] & match_addr_unencoded_raw[9] & match_addr_unencoded_raw[10] & match_addr_unencoded_raw[11] & match_addr_unencoded_raw[12] & match_addr_unencoded_raw[13] & match_addr_unencoded_raw[14] & match_addr_unencoded_raw[15] & match_addr_unencoded_raw[16] & match_addr_unencoded_raw[17] & match_addr_unencoded_raw[18] & match_addr_unencoded_raw[19] & match_addr_unencoded_raw[20]& match_addr_unencoded_raw[21] & match_addr_unencoded_raw[22]& match_addr_unencoded_raw[23]& match_addr_unencoded_raw[24]& match_addr_unencoded_raw[25]& match_addr_unencoded_raw[26]& match_addr_unencoded_raw[27]& match_addr_unencoded_raw[28]& match_addr_unencoded_raw[29]& match_addr_unencoded_raw[30]& match_addr_unencoded_raw[31];
+assign match_addr_unencoded =(start)?( match_addr_unencoded_raw[0] & match_addr_unencoded_raw[1] & match_addr_unencoded_raw[2] & match_addr_unencoded_raw[3] & match_addr_unencoded_raw[4] & match_addr_unencoded_raw[5] & match_addr_unencoded_raw[6] & match_addr_unencoded_raw[7] & match_addr_unencoded_raw[8] & match_addr_unencoded_raw[9] & match_addr_unencoded_raw[10] & match_addr_unencoded_raw[11] & match_addr_unencoded_raw[12] & match_addr_unencoded_raw[13] & match_addr_unencoded_raw[14] & match_addr_unencoded_raw[15] & match_addr_unencoded_raw[16] & match_addr_unencoded_raw[17] & match_addr_unencoded_raw[18] & match_addr_unencoded_raw[19] & match_addr_unencoded_raw[20]& match_addr_unencoded_raw[21] & match_addr_unencoded_raw[22]& match_addr_unencoded_raw[23]& match_addr_unencoded_raw[24]& match_addr_unencoded_raw[25]& match_addr_unencoded_raw[26]& match_addr_unencoded_raw[27]& match_addr_unencoded_raw[28]& match_addr_unencoded_raw[29]& match_addr_unencoded_raw[30]& match_addr_unencoded_raw[31]):0;
 endmodule

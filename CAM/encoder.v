@@ -13,15 +13,16 @@ module encoder #
 )
 (
     input  wire [WIDTH-1:0]         input_unencoded,
+//    input  wire                     start,
     output wire                     output_valid,
     output wire [$clog2(WIDTH)-1:0] output_encoded
 );
 
 // power-of-two width
-parameter W1 = 2**$clog2(WIDTH);
-parameter W2 = W1/2;
+localparam W1 = 2**$clog2(WIDTH);
+localparam W2 = W1/2;
 
-
+//wire [$clog2(WIDTH)-1:0] out;
 /*
 this part is recursive part 
 */
@@ -70,5 +71,5 @@ generate
         end
     end
 endgenerate
-
+//assign output_encoded = out;
 endmodule

@@ -2,6 +2,7 @@
 
 module cde( input clk,
             input rst,
+            input cam_start,
             input [127:0] pass,
             input start_dec,
             input start_enc,
@@ -78,8 +79,9 @@ module cde( input clk,
       cam_inst(
          .clk(clk),
          .rst(rst),
+         .start(cam_start),
          .write_enable(write_en),
-         .din(account),
+         .din(out_reg_flash_or_acc),
          .write_addr(write_add),
          .match(match),
          .match_addr(match_add)

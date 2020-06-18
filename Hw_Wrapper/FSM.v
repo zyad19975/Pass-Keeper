@@ -7,6 +7,7 @@ module FSM(
     input   enc_done,
     input   dec_done,
     input   [3:0] max_add,
+    output reg  cam_start,
     output reg  start_dec,
     output reg  start_enc,
     output reg  boot_load_reg,
@@ -23,7 +24,7 @@ module FSM(
     output reg  local_master_sel,
     output reg  local_master_reg,
     output reg  done,
-    output      [3:0] address_out //da el address ele mtwsl b flash w cam f nafs el wa2t
+    output reg  [3:0] address_out //da el address ele mtwsl b flash w cam f nafs el wa2t
     );
     
     reg [4:0] currentstate;
@@ -36,14 +37,13 @@ module FSM(
     parameter wait_encrypt = 15,    falsh_write = 16,       out = 17;
     parameter wait_dec = 18;
     
-    reg [3:0] i;
-    assign address_out = i;
+
     always @(posedge clk, posedge rst)
     begin
+        
         if(rst) // go to state zero if rese
             begin
             currentstate <= start;
-            i = -1;
             end
         else // otherwise update the states
             begin
@@ -51,12 +51,13 @@ module FSM(
             end
     end
     
-    always@(currentstate,match,go,enc_done,dec_done)
+    always@(currentstate,match,go,enc_done,dec_done,max_add)
     begin
         
         case(currentstate)
             start:
             begin
+                address_out <= 0;
                 boot_load_reg <= 0;
                 start_enc <=0;
                 cam_write_en <= 0;
@@ -67,6 +68,7 @@ module FSM(
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
                 start_dec <=0;
+                cam_start <=0;
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -86,6 +88,7 @@ module FSM(
                 flash_or_acc_sel <= 0;
                 flash_or_acc_reg <= 0;
                 pass_enc_reg <= 0;
+                cam_start <=0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
                 start_dec <=0; 
@@ -95,8 +98,7 @@ module FSM(
                 local_master_sel <= 0;
                 local_master_reg <= 0;
                 done <= 0;
-                if (i > max_add) begin
-                    i = i +1;
+                if (address_out < max_add) begin
                     nextstate <=load_cam;
                 end else begin
                     nextstate <=boot_done;
@@ -117,6 +119,7 @@ module FSM(
                 plain_reg <= 0;
                 start_dec <=0;
                 start_enc <=0; 
+                cam_start <=0;
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -146,6 +149,7 @@ module FSM(
                 local_master_reg <= 0;
                 done <= 0;
                 nextstate <= boot;
+                address_out = address_out +1;
             end
 
 
@@ -188,7 +192,6 @@ module FSM(
                 flash_pass_reg <= 0;
                 local_master_sel <= 0;
                 local_master_reg <= 0;
-                done <= 0;
                 if(go)
                 begin
                     nextstate <= go_state;
@@ -206,6 +209,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
+                cam_start <=0;
                 start_dec <=0; 
                 start_enc <=0;
                 out_reg <= 0;
@@ -226,6 +230,7 @@ module FSM(
                 flash_or_acc_sel <= 0;
                 flash_or_acc_reg <= 0;
                 pass_enc_reg <= 0;
+                cam_start <=1;
                 new_old_pass_sel <= 0;
                 plain_reg <= 0;
                 start_dec <=0; 
@@ -256,6 +261,7 @@ module FSM(
                 plain_reg <= 0;
                 start_dec <=0; 
                 start_enc <=0;
+                cam_start <=0;
                 out_reg <= 0;
                 flash_acc_reg <= 0;
                 flash_pass_reg <= 0;
@@ -297,7 +303,7 @@ module FSM(
             flash_or_acc_reg <= 0;
             pass_enc_reg <= 0;
             new_old_pass_sel <= 1;
-            plain_reg <= 0;
+            plain_reg <= 1;
             start_dec <=0; 
             start_enc <=0;
             out_reg <= 0;
@@ -323,7 +329,7 @@ module FSM(
                 flash_or_acc_reg <= 0;
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
-                plain_reg <= 1;
+                plain_reg <= 0;
                 start_dec <=0; 
                 start_enc <=1;
                 out_reg <= 0;
@@ -370,6 +376,7 @@ module FSM(
                 pass_enc_reg <= 0;
                 new_old_pass_sel <= 0;
                 plain_reg <= 1;
+                cam_start <=0;
                 start_dec <=0;
                 start_enc <=0; 
                 out_reg <= 0;
@@ -470,7 +477,7 @@ module FSM(
                 local_master_reg <= 0;
                 done <= 0;
                 nextstate <=  out;
-                i <= i + 1;
+                address_out <= address_out + 1;
             end
             
             out:

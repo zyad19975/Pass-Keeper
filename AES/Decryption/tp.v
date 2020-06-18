@@ -15,11 +15,11 @@ module tb ();
              clk  = 0;
              rest = 1;
              s=0;
-             #5
+             #10
              
              rest = 0 ;
              s=1;
-             plaintext1 = 128'h 54776F204F6E65204E696E652054776F ;
+             plaintext1 = 128'h 29C3505F571420F6402299B31A02D73A ;
              local_key  = 128'h 5468617473206D79204B756E67204675 ;
          end
  endmodule

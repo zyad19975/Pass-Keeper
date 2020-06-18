@@ -4,6 +4,7 @@ module CAM_tp ;
 
     reg           clk;
     reg           rst;
+    reg           start;
     //Write bit to enable writing operation
     reg           write_enable;
     //Input data to be look up to
@@ -27,6 +28,7 @@ module CAM_tp ;
     cam_inst(
     .clk(clk),
     .rst(rst),
+    .start(start),
     .write_enable(write_enable),
     .din(din),
     .write_addr(write_addr),
@@ -43,26 +45,29 @@ module CAM_tp ;
 		begin
         clk = 0;
         rst = 1;
+        start = 0;
         #100
         rst = 0;
         #50
-        din = 128'haaaa_aaaa_aaaa_aaaa_aaaa_aaaa_aaaa_aaaa;
+        din = 128'h00000000000000000000000000000000;
         write_addr = 6'b000000;
         write_enable = 1;
         #100
         write_enable = 0;
         #100
         write_enable = 1;
-        din = 128'h0000_0000_0000_0000_0000_0000_0000_0000;
+        din = 128'h00000000000000000000000000000000;
         write_addr = 6'b000001;
         #100
         write_enable = 0;
         #100
-        din = 128'haaaa_aaaa_aaaa_aaaa_aaaa_aaaa_aaaa_aaaa;
-        #100
+        start = 1;
         din = 128'h0000_0000_0000_0000_0000_0000_0000_0000;
         #100
-        din = 128'h1111_0000_0000_0000_0000_0000_0000_1111;
+        din = 128'h0000_0000_0000_0000_0000_0000_0000_1111;
+        #100
+        start = 0;
+        din = 128'h0000_0000_0000_0000_0000_0000_0000_0000;
         
         
 

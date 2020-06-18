@@ -39,7 +39,7 @@ module RAM_memory(
 	// Write
 	   if (rst) begin 
 	   for (i = 0 ;i < (16) ; i = i+1 ) begin
-           ram[i] = 0;     
+           ram[i] <= 0;     
            end
 	   end
 		if (we)

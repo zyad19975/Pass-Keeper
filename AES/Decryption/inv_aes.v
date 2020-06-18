@@ -23,7 +23,8 @@
          R_10 = 10,   
          R_11 = 11,  
          R_12=12,
-         R_idel=13;
+         R_idel=13,
+         wait_key = 14;
  
  reg [3:0] state ;
  reg last;
@@ -57,16 +58,34 @@
             busy <=0;
             done <=0;
             flag <=0;
+            cipher_text<=0;
            end
-      else if (start && done_k && !busy )
+      else if (start && done_k&& !busy )
       begin
          state <=R_11;
+         rount_no = 10;
          flag <=1;
          busy <=1;
+         done <=0;
+         last = 0 ;
          end  
+       else if (start && !done_k&& !busy ) begin
+            rount_no = 10;
+            state <= wait_key;
+            busy <=1;
+            done <=0;
+            flag <=1;
+            last = 0 ;                  
+       end
       else if (flag ) begin
                    
                            case (state)
+                           wait_key: begin
+                                if(done_k)begin
+                                   state <=R_11;
+                                end
+
+                           end
                                 R_11 : begin
                                             state <=R_12;
                                             rount_no <=9;

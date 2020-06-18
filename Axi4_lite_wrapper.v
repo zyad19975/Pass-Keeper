@@ -605,11 +605,11 @@
 	// Add user logic here
 
     assign rst = slv_reg0;
-    assign go = slv_reg11;
-    assign max_address = slv_reg3;
-    assign master_key = {slv_reg4,slv_reg5,slv_reg6,slv_reg7};
-    assign account = {slv_reg8,slv_reg9,slv_reg10,slv_reg11};
-    assign password = {slv_reg12,slv_reg13,slv_reg14,slv_reg15};
+    assign go = slv_reg1;
+    assign max_address = slv_reg2;
+    assign master_key = {slv_reg3,slv_reg4,slv_reg5,slv_reg6};
+    assign account = {slv_reg7,slv_reg8,slv_reg9,slv_reg10};
+    assign password = {slv_reg11,slv_reg12,slv_reg13,slv_reg14};
     //assign password_enc = {o1,o2,o3,o4};
 	//assign done = slv_reg20[0];
 	

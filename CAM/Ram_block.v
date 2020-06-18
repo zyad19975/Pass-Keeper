@@ -31,27 +31,22 @@ reg [(2**ADDR_WIDTH)-1:0] mem [(2**DATA_WIDTH-1):0];
 
 // Port B
 reg [(2**ADDR_WIDTH)-1:0]   b_dout_reg;
-assign b_dout = b_dout_reg;
 
-always@(posedge clk) begin
-    
-    b_dout_reg <= mem[b_din];
+assign b_dout = mem[b_din];
 
-end
 
 integer i;
-always@(posedge clk) begin
 
+always@(posedge clk) begin
     if (rst)begin
-    for (i = 0 ;i < (2**DATA_WIDTH) ; i = i+1 ) begin
-    mem[i] = 0;     
+        for (i = 0 ;i < (2**DATA_WIDTH) ; i = i+1 ) begin
+            mem[i] = 0;     
+        end
     end
-    end
-end
-always@(clk) begin
-    if (write) begin
+    else if (write) begin
             mem[a_din][a_addr] <= 1'b1;
     end 
+
 end
 
 endmodule
