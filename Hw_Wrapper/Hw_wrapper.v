@@ -7,7 +7,7 @@ module Hw_wrapper(
     input [127:0] master_key,
     input [127:0] account,
     input [127:0] password,
-    // input [3:0]   max_address, 
+    input [3:0]   max_address,
     output done,
     output[127:0] password_enc,
     output boot_done_signal
@@ -17,15 +17,14 @@ module Hw_wrapper(
     wire [255:0] write_data_flash;
     wire [3:0] add_flash;
     wire flash_write;
-    wire [3:0] max_address;
+    
     RAM_memory R2(
         .data(write_data_flash),
         .addr(add_flash),
         .we(flash_write),
         .clk(clk),
         .rst(rst),
-        .q(data_flash),
-        .max_add(max_address)
+        .q(data_flash)
     );
     Top_level R1(
         .clk(clk),

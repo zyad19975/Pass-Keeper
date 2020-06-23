@@ -52,7 +52,7 @@ module FSM(
             end
     end
     
-    always@(currentstate,match,go,enc_done,dec_done,max_add)
+    always@(currentstate,match,go,enc_done,dec_done,max_add,cam_start)
     begin
         
         case(currentstate)
@@ -76,7 +76,7 @@ module FSM(
                 local_master_sel <= 0;
                 local_master_reg <= 0;
                 done <= 0;
-                boot_done_signal<=0;
+                boot_done_signal <=0;
                 nextstate <= boot;
             end
 
@@ -100,7 +100,7 @@ module FSM(
                 local_master_sel <= 0;
                 local_master_reg <= 0;
                 done <= 0;
-                boot_done_signal<=0;
+                boot_done_signal <=0;
                 if (address_out < max_add) begin
                     nextstate <=load_cam;
                 end else begin
@@ -129,7 +129,7 @@ module FSM(
                 local_master_sel <= 0;
                 local_master_reg <= 0;
                 done <= 0;
-                boot_done_signal<=0;
+                boot_done_signal <=0;
                 nextstate <= busy_cam;
             end
 
@@ -152,7 +152,7 @@ module FSM(
                 local_master_sel <= 0;
                 local_master_reg <= 0;
                 done <= 0;
-                boot_done_signal<=0;
+                boot_done_signal <=0;
                 nextstate <= boot;
                 address_out = address_out +1;
             end
@@ -176,7 +176,7 @@ module FSM(
                 local_master_sel <= 0;
                 local_master_reg <= 0;
                 done <= 0;
-                boot_done_signal<=1;
+                boot_done_signal <=1;
                 nextstate <= idle;
             end
 
@@ -482,7 +482,7 @@ module FSM(
                 local_master_sel <= 0;
                 local_master_reg <= 0;
                 done <= 0;
-                nextstate <=  out;
+                nextstate <=  encrypt_master;
                 address_out <= address_out + 1;
             end
             
@@ -505,6 +505,29 @@ module FSM(
                 local_master_reg <= 0;
                 done <= 1;
                 nextstate <= idle;
+            end
+            default:
+            begin
+                 address_out <= 0;
+                 boot_load_reg <= 0;
+                 start_enc <=0;
+                 cam_write_en <= 0;
+                 flash_write_en <= 0;
+                 flash_or_acc_sel <= 0;
+                 flash_or_acc_reg <= 0;
+                 pass_enc_reg <= 0;
+                 new_old_pass_sel <= 0;
+                 plain_reg <= 0;
+                 start_dec <=0;
+                 cam_start <=0;
+                 out_reg <= 0;
+                 flash_acc_reg <= 0;
+                 flash_pass_reg <= 0;
+                 local_master_sel <= 0;
+                 local_master_reg <= 0;
+                 done <= 0;
+                 boot_done_signal <=0;
+                 nextstate <= boot;                
             end
         endcase
 

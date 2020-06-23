@@ -24,17 +24,17 @@ module cam #(
     //A matching address is found
     output wire                     match,
     //the matched address
-    output wire [ADDR_WIDTH-1:0]    match_addr
+    output reg [ADDR_WIDTH-1:0]    match_addr
     );
 
 localparam SLICE_COUNT = (DATA_WIDTH + SLICE_WIDTH - 1) / SLICE_WIDTH;
 
-
-
+wire match_w;
+wire [ADDR_WIDTH-1:0]    match_addr_w;
 wire [(2**ADDR_WIDTH)-1:0] match_addr_unencoded;
 wire [(2**ADDR_WIDTH)-1:0] match_addr_unencoded_raw [SLICE_COUNT : 0];
 
-
+assign match = match_w; 
 genvar slice_ind;
 generate
 for (slice_ind = 0; slice_ind < SLICE_COUNT; slice_ind = slice_ind + 1) begin : slice
@@ -67,8 +67,15 @@ encoder #(
         )
         encoder_inst1 (
             .input_unencoded(match_addr_unencoded),
-            .output_valid(match),
-            .output_encoded(match_addr)
+            .output_valid(match_w),
+            .output_encoded(match_addr_w)
         );
+  always@(clk)begin
+    if (start)
+    match_addr <= match_addr_w;
+    else if(rst)
+    match_addr <= 0;
+
+  end
 assign match_addr_unencoded =(start)?( match_addr_unencoded_raw[0] & match_addr_unencoded_raw[1] & match_addr_unencoded_raw[2] & match_addr_unencoded_raw[3] & match_addr_unencoded_raw[4] & match_addr_unencoded_raw[5] & match_addr_unencoded_raw[6] & match_addr_unencoded_raw[7] & match_addr_unencoded_raw[8] & match_addr_unencoded_raw[9] & match_addr_unencoded_raw[10] & match_addr_unencoded_raw[11] & match_addr_unencoded_raw[12] & match_addr_unencoded_raw[13] & match_addr_unencoded_raw[14] & match_addr_unencoded_raw[15] & match_addr_unencoded_raw[16] & match_addr_unencoded_raw[17] & match_addr_unencoded_raw[18] & match_addr_unencoded_raw[19] & match_addr_unencoded_raw[20]& match_addr_unencoded_raw[21] & match_addr_unencoded_raw[22]& match_addr_unencoded_raw[23]& match_addr_unencoded_raw[24]& match_addr_unencoded_raw[25]& match_addr_unencoded_raw[26]& match_addr_unencoded_raw[27]& match_addr_unencoded_raw[28]& match_addr_unencoded_raw[29]& match_addr_unencoded_raw[30]& match_addr_unencoded_raw[31]):0;
 endmodule

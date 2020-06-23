@@ -26,7 +26,9 @@ localparam W2 = W1/2;
 /*
 this part is recursive part 
 */
+
 generate
+
     if (WIDTH == 1) begin
         // one input
         assign output_valid = input_unencoded;

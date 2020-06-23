@@ -30,7 +30,7 @@ module cde( input clk,
             output [127:0] final_output
     );
     parameter  ADDR_WIDTH =4;
-    parameter loacal_key = 128'h5468617473206D79204B756E67204675;
+    parameter loacal_key = 128'h00000000000000000000000000000000;
     
     
     wire dec_busy;

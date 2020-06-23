@@ -1,7 +1,7 @@
 
 `timescale 1 ns / 1 ps
 
-	module pass_keeper_v3_S00_AXI #
+	module Pass_keeper_final_v1_0_S00_AXI #
 	(
 		// Users to add parameters here
 
@@ -15,7 +15,14 @@
 	)
 	(
 		// Users to add ports here
-
+            
+        output [3:0]state,
+        output done,
+        output boot_done,
+        output [31:0]o1,
+        output [31:0]o2,
+        output [31:0]o3,
+        output [31:0]o4, 
 		// User ports ends
 		// Do not modify the ports beyond this line
 
@@ -103,7 +110,7 @@
 	//----------------------------------------------
 	//-- Signals for user logic register space example
 	//------------------------------------------------
-	//-- Number of Slave Registers 21
+	//-- Number of Slave Registers 22
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg0;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg1;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg2;
@@ -125,30 +132,13 @@
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg18;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg19;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg20;
+	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg21;
 	wire	 slv_reg_rden;
 	wire	 slv_reg_wren;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	 reg_data_out;
 	integer	 byte_index;
 	reg	 aw_en;
 
-
-
-    //users wires declarations
-    wire go;
-    wire rst;
-    wire [127:0] master_key;
-    wire [127:0] account;
-    wire [127:0] password;
-    wire [3:0]   max_address;
-    wire[127:0] password_enc1;
-    wire done;
-    
-    wire [31:0]o1;
-    wire [31:0]o2;
-    wire [31:0]o3;
-    wire [31:0]o4; 
-    //users wires declarations ends
-    
 	// I/O Connections assignments
 
 	assign S_AXI_AWREADY	= axi_awready;
@@ -276,6 +266,7 @@
 	      slv_reg18 <= 0;
 	      slv_reg19 <= 0;
 	      slv_reg20 <= 0;
+	      slv_reg21 <= 0;
 	    end 
 	  else begin
 	    if (slv_reg_wren)
@@ -428,6 +419,13 @@
 	                // Slave register 20
 	                slv_reg20[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 	              end  
+	          5'h15:
+	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
+	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
+	                // Respective byte enables are asserted as per write strobes 
+	                // Slave register 21
+	                slv_reg21[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+	              end  
 	          default : begin
 	                      slv_reg0 <= slv_reg0;
 	                      slv_reg1 <= slv_reg1;
@@ -450,6 +448,7 @@
 	                      slv_reg18 <= slv_reg18;
 	                      slv_reg19 <= slv_reg19;
 	                      slv_reg20 <= slv_reg20;
+	                      slv_reg21 <= slv_reg21;
 	                    end
 	        endcase
 	      end
@@ -559,27 +558,28 @@
 	      // Address decoding for reading registers
 	      case ( axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] )
 	        5'h00   : reg_data_out <= slv_reg0;
-            5'h01   : reg_data_out <= slv_reg1;
-            5'h02   : reg_data_out <= slv_reg2;
-            5'h03   : reg_data_out <= slv_reg3;
-            5'h04   : reg_data_out <= slv_reg4;
-            5'h05   : reg_data_out <= slv_reg5;
-            5'h06   : reg_data_out <= slv_reg6;
-            5'h07   : reg_data_out <= slv_reg7;
-            5'h08   : reg_data_out <= slv_reg8;
-            5'h09   : reg_data_out <= slv_reg9;
-            5'h0A   : reg_data_out <= slv_reg10;
-            5'h0B   : reg_data_out <= slv_reg11;
-            5'h0C   : reg_data_out <= slv_reg12;
-            5'h0D   : reg_data_out <= slv_reg13;
-            5'h0E   : reg_data_out <= slv_reg14;
-            5'h0F   : reg_data_out <= slv_reg15;
+	        5'h01   : reg_data_out <= slv_reg1;
+	        5'h02   : reg_data_out <= slv_reg2;
+	        5'h03   : reg_data_out <= slv_reg3;
+	        5'h04   : reg_data_out <= slv_reg4;
+	        5'h05   : reg_data_out <= slv_reg5;
+	        5'h06   : reg_data_out <= slv_reg6;
+	        5'h07   : reg_data_out <= slv_reg7;
+	        5'h08   : reg_data_out <= slv_reg8;
+	        5'h09   : reg_data_out <= slv_reg9;
+	        5'h0A   : reg_data_out <= slv_reg10;
+	        5'h0B   : reg_data_out <= slv_reg11;
+	        5'h0C   : reg_data_out <= slv_reg12;
+	        5'h0D   : reg_data_out <= slv_reg13;
+	        5'h0E   : reg_data_out <= slv_reg14;
+	        5'h0F   : reg_data_out <= state;
             5'h10   : reg_data_out <= o1;
             5'h11   : reg_data_out <= o2;
             5'h12   : reg_data_out <= o3;
             5'h13   : reg_data_out <= o4;
             5'h14   : reg_data_out <= done;
-            default : reg_data_out <= 0;
+	        5'h15   : reg_data_out <= boot_done;
+	        default : reg_data_out <= 0;
 	      endcase
 	end
 
@@ -603,27 +603,19 @@
 	end    
 
 	// Add user logic here
-
-    assign rst = slv_reg0;
-    assign go = slv_reg1;
-    assign max_address = slv_reg2;
-    assign master_key = {slv_reg3,slv_reg4,slv_reg5,slv_reg6};
-    assign account = {slv_reg7,slv_reg8,slv_reg9,slv_reg10};
-    assign password = {slv_reg11,slv_reg12,slv_reg13,slv_reg14};
-    //assign password_enc = {o1,o2,o3,o4};
-	//assign done = slv_reg20[0];
-	
     Hw_wrapper hw(
         .clk(S_AXI_ACLK),
-        .go(go),
-        .rst(rst),
-        .master_key(master_key),
-        .account(account),
-        .password(password),
-        .max_address(max_address),
+        .go(slv_reg1),
+        .rst((!S_AXI_ARESETN)),
+        .master_key({slv_reg3,slv_reg4,slv_reg5,slv_reg6}),
+        .account({slv_reg7,slv_reg8,slv_reg9,slv_reg10}),
+        .password({slv_reg11,slv_reg12,slv_reg13,slv_reg14}),
+        .max_address(slv_reg2),
+        .state(state),
         .done(done),
-        .password_enc({o1,o2,o3,o4})
+        .password_enc({o1,o2,o3,o4}),
+        .boot_done_signal(boot_done)
         );
-	// User logic ends
+    // User logic ends
 
 	endmodule

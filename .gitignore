@@ -33,3 +33,4 @@ transcript
 Hw_Wrapper/work/_vmake
 Hw_Wrapper/work/_info
 Hw_Wrapper/test.v
+.vscode/settings.json

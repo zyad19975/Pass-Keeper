@@ -25,8 +25,7 @@ module RAM_memory(
 	input [3:0] addr,
 	input we, clk,
 	input rst,
-	output  [255:0] q,
-	output reg [3:0] max_add  
+	output  [255:0] q
 );
 
 	// Declare the RAM variable
@@ -42,13 +41,9 @@ module RAM_memory(
 	   for (i = 0 ;i < (16) ; i = i+1 ) begin
            ram[i] <= 0;     
            end
-		   max_add =0;
 	   end
 		if (we)
-			begin
 			ram[addr] <= data;
-				max_add= max_add+1;
-			end
 		
 		//addr_reg <= addr;
 		
