@@ -9,7 +9,7 @@ module encoder #
 (
     parameter WIDTH = 4,
     // LSB priority: "LOW", "HIGH"
-    parameter LSB_PRIORITY = "LOW"
+    parameter LSB_PRIORITY = "HIGH"
 )
 (
     input  wire [WIDTH-1:0]         input_unencoded,
@@ -60,7 +60,7 @@ generate
             .LSB_PRIORITY(LSB_PRIORITY)
         )
         encoder_inst2 (
-            .input_unencoded({{W1-WIDTH{1'b0}}, input_unencoded[WIDTH-1:W2]}),
+            .input_unencoded(input_unencoded[WIDTH-1:W2]),
             .output_valid(valid2),
             .output_encoded(out2)
         );

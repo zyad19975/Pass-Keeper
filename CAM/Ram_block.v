@@ -22,7 +22,7 @@ module ram_dp #
 
     // port B
     input  wire [DATA_WIDTH-1:0]        b_din,
-    output wire [(2**ADDR_WIDTH)-1:0]   b_dout
+    output reg [(2**ADDR_WIDTH)-1:0]   b_dout
 );
 
 //main BRAM memory
@@ -32,12 +32,11 @@ reg [(2**ADDR_WIDTH)-1:0] mem [(2**DATA_WIDTH-1):0];
 // Port B
 reg [(2**ADDR_WIDTH)-1:0]   b_dout_reg;
 
-assign b_dout = mem[b_din];
 
 
 integer i;
 
-always@(posedge clk) begin
+always@(negedge clk) begin
     if (rst)begin
         for (i = 0 ;i < (2**DATA_WIDTH) ; i = i+1 ) begin
             mem[i] = 0;     
@@ -46,6 +45,7 @@ always@(posedge clk) begin
     else if (write) begin
             mem[a_din][a_addr] <= 1'b1;
     end 
+    b_dout <= mem[b_din];
 
 end
 

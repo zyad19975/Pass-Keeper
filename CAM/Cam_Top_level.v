@@ -6,9 +6,9 @@
  */
 module cam #(
     // search data bus width
-    parameter DATA_WIDTH  = 4,
+    parameter DATA_WIDTH  = 128,
     // memory size in log2(words)
-    parameter ADDR_WIDTH  = 2,
+    parameter ADDR_WIDTH  = 6,
     parameter SLICE_WIDTH = 4
 )
 (
@@ -70,7 +70,7 @@ encoder #(
             .output_valid(match_w),
             .output_encoded(match_addr_w)
         );
-  always@(clk)begin
+  always@(clk,rst,start)begin
     if (start)
     match_addr <= match_addr_w;
     else if(rst)
