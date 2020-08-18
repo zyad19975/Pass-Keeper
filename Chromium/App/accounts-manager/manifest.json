@@ -1,0 +1,16 @@
+{
+  "manifest_version": 2,
+  "name": "Accounts Manager",
+  "version": "1",
+  "icons": {
+    "128": "icon_128.png"
+  },
+  "permissions": [
+	{"socket": ["tcp-connect:*:*"]}],
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "minimum_chrome_version": "28"
+}

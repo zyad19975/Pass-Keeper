@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Accounts List</title>
+      <link rel="stylesheet" href="semantic.min.css"/>
+      <link rel="icon" href="pk.png">
+      <style>
+		body{overflow:auto;}
+         .field i {
+         margin-top: 7px;
+         float: right;
+         margin-left: -30px;
+         cursor: pointer;
+         }
+         .floated.right{float:right;}
+		 .hide{display:none;}
+		 .active .set-btn{display:none;}
+      </style>
+   </head>
+   <body>
+      <div class="ui account modal">
+         <i class="close icon"></i>
+         <div class="header">Add a new account</div>
+         <div class="content">
+            <div class="ui form container attached">
+               <div class="field">
+                  <label>Account</label>
+                  <input id="username" class="ui field" type="text" name="username" placeholder="Enter the acount" maxlength="16">
+               </div>
+               <div class="field">
+                  <label>Password</label>
+                  <input type="password" class="ui field" name="password" id="password" placeholder="Enter the password" maxlength="16">
+                  <i class="eye large icon" id="togglePassword"></i>
+               </div>
+               <button class="ui secondary button" type="submit" id="save">Add</button>
+            </div>
+         </div>
+      </div>
+      <div class="ui container">
+		 <div id="header_div"></div>
+         <div class="ui huge attached message">Pass keeper Graphical User Interface</div>
+         <h1 class="ui large header">Accounts</h1>
+         <table class="ui table hide">
+            <thead><th>Username</th><th></th></thead>
+            <tbody></tbody>
+         </table>
+		 <div class="ui segment" id="errors" class="hide"></div>
+         <div class="ui segment" id="table_preloader">
+            <div class="ui active inverted dimmer">
+               <div class="ui text loader">Loading</div>
+            </div>
+            <div class="ui placeholder">
+               <div class="line"></div>
+               <div class="line"></div>
+               <div class="line"></div>
+               <div class="line"></div>
+               <div class="line"></div>
+            </div>
+         </div>
+         <a href="#" class="add_btn ui primary button floated right" onclick="modalAdd();">Add</a>
+      </div>
+      <script src="jquery.js"></script>
+      <script src="underscore-min.js"></script>
+      <script src="options.js"></script>
+      <script src="semantic.min.js"></script>
+   </body>
+</html>
