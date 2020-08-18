@@ -1,3 +1,20 @@
+/*
+* ------AES Top Module------
+Inputs :
+	1- PlainText -128 bit wire- (which is sometimes refered to as State)
+	2- Key  -128 bit wire-
+Outputs : 
+	1- CipherText -128 bit register- 
+	2- keyout -128 bit- the final key that have passed by all the shifts 
+	   (used for testing in AES decryption) 
+ 	   
+Description :
+	-AES Top Module consists of an initial ADD inv_round Key, 9 similar inv_rounds
+	 and a last inv_round
+	-The output of each inv_round (state and keyout) is the input of the next inv_round
+*/
+
+`timescale 1ns / 1ps
  
  module inv_aes(
      input clk , rest ,
@@ -34,7 +51,7 @@
  reg  [127:0] keys1;
  reg [127:0] adk_out;
  reg [127:0] adk_out1;
-  wire done_k;
+ wire done_k;
         // inv_add_round_keys adk_0(plaintext, keys, adk_out0);
      
           wire [127:0] out1;
@@ -50,50 +67,57 @@
  always @(posedge clk)
      begin
        
-       if (rest )
+       if (rest)
            begin
-             rount_no = 10;
-             last = 0 ;
+             rount_no <= 10;
+             last <= 0 ;
             state <= R_idel;
             busy <=0;
             done <=0;
             flag <=0;
             cipher_text<=0;
            end
-      else if (start && done_k&& !busy )
+      else if (start && done_k&& !busy&&!done )
       begin
          state <=R_11;
-         rount_no = 10;
+         rount_no <= 10;
          flag <=1;
          busy <=1;
          done <=0;
-         last = 0 ;
+         last <= 0 ;
          end  
-       else if (start && !done_k&& !busy ) begin
-            rount_no = 10;
+       else if (start && !done_k&& !busy &&!done) begin
+            rount_no <= 10;
             state <= wait_key;
             busy <=1;
             done <=0;
             flag <=1;
-            last = 0 ;                  
+            last <= 0 ;                  
        end
       else if (flag ) begin
                    
                            case (state)
-                           wait_key: begin
+                             wait_key: begin
                                 if(done_k)begin
-                                   state <=R_11;
+                                   state <= R_11;
                                 end
 
-                           end
-                                R_11 : begin
+                                  end
+                                   R_idel : 
+                                    begin
+                                        done <= 0;
+										busy <= 0;
+										//$display("ideal state");
+                                    end
+                                    
+                                    R_11 : begin
                                             state <=R_12;
                                             rount_no <=9;
                                             
                                             end  
                                     R_12: begin 
                                              
-                                            adk_out1 <=key_round^ plaintext;
+                                            adk_out <= key_round ^ plaintext;
                                             state <=R_0;
                                             rount_no <=8;
                                           end 
@@ -101,7 +125,7 @@
                                          
                                             rount_no <=7;
                                             keys1 <= key_round;
-                                            adk_out <= adk_out1;
+                                            //adk_out <= adk_out1;
                                             state <=R_1;
                                          end
                                    R_1: begin 
@@ -161,19 +185,14 @@
                                         end   
                                     R_10: begin 
                                         cipher_text <= out1;
-                                        done <=1;
-                                        busy <=0;
-                                      state <=R_idel;
+                                        done <= 1;
+                                        busy <= 0;
+                                        state <= R_idel;
                                      end                      
                                                                                                                                                                                                                                                                                                                                                     
                            endcase    
            end
-           
-  
+             
      end
-     
-        
-         
-         
-         
+                                    
  endmodule
