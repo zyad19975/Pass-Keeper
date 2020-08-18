@@ -9,6 +9,9 @@ Outputs :
 Description :
 	-In this module, the state is ored with the subkey
 */
+
+`timescale 1ns / 1ps
+
 module inv_add_round_keys(
 	input wire[127 : 0] state,
 	input wire[127 : 0] subkey,
@@ -20,4 +23,3 @@ module inv_add_round_keys(
 			out = state ^ subkey;
 		end
 endmodule
-
