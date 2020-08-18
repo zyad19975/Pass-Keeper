@@ -10,6 +10,8 @@ Description :
 	 another byte using the sbox
 */
 
+`timescale 1ns / 1ps
+
 module inv_subbytes(
 	input wire[127 : 0] in,
 	output reg [127 : 0] out
