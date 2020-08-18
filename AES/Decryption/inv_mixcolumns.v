@@ -13,70 +13,75 @@ Description :
 	  multiplies and adds with [03 01 01 02] over GF(2^8), the last one
 	  is the output matrix
 */
+
+
+
+ `timescale 1ns / 1ps
+
 module inv_Mix_Column(input wire[127:0]in, output reg[127:0]out1);
 wire [127:0]out;
   
-  function [7:0] mul_2(input [7:0] byte);  // multiply by 2 "x" 
+  function [7:0] mul_2(input [7:0] byteg);  // multiply by 2 "x" 
     begin 
 	 
 
 
-      if(byte[7]==1'b0)		// if MSB = 0, SLL by 1
-        mul_2 = byte<<1;
+      if(byteg[7]==1'b0)		// if MSB = 0, SLL by 1
+        mul_2 = byteg<<1;
       else
-        mul_2 = (byte<<1)^(8'h1b); // if MSB = 1, SLL by 1 XOR 1B
+        mul_2 = (byteg<<1)^(8'h1b); // if MSB = 1, SLL by 1 XOR 1B
 		 
     end
 	 
   endfunction
 
-function [7:0] mul_4(input [7:0] byte); 
+function [7:0] mul_4(input [7:0] byteg); 
     begin
 	
-      mul_4=mul_2(mul_2(byte));
+      mul_4=mul_2(mul_2(byteg));
 			
     end
   endfunction
 
   
-   function [7:0] mul_8(input [7:0] byte);  // multiply by 4 "x^2" 
+   function [7:0] mul_8(input [7:0] byteg);  // multiply by 4 "x^2" 
     begin 
 	 
-      mul_8=mul_2(mul_4(byte));
+      mul_8=mul_2(mul_4(byteg));
 		
     end
   endfunction
 
 
   
-  function [7:0] mul_9(input [7:0] byte);  // multiply by 9 "x^3+1" 
+  function [7:0] mul_9(input [7:0] byteg);  // multiply by 9 "x^3+1" 
     begin 
        
-        mul_9 = mul_8(byte)^byte;
+        mul_9 = mul_8(byteg)^byteg;
 		
     end
   endfunction
   
-  function [7:0] mul_11(input [7:0] byte);  // multiply by 11 "x^3+x+1" 
+  function [7:0] mul_11(input [7:0] byteg);  // multiply by 11 "x^3+x+1" 
     begin 
       
-        mul_11 = mul_9(byte)^mul_2(byte);
+        mul_11 = mul_9(byteg)^mul_2(byteg);
 		  
     end
   endfunction
 
-  function [7:0] mul_13(input [7:0] byte);  // multiply by 13 "x^3+x^2+1" 
+  function [7:0] mul_13(input [7:0] byteg);  // multiply by 13 "x^3+x^2+1" 
     begin 
    
-        mul_13 =  mul_9(byte)^mul_4(byte);
+        mul_13 =  mul_9(byteg)^mul_4(byteg);
 
     end
   endfunction
   
-  function [7:0] mul_14(input [7:0] byte);  // multiply by 13 "x^3+x^2+x" 
+  function [7:0] mul_14(input [7:0] byteg);  // multiply by 13 "x^3+x^2+x" 
     begin 
       
-        mul_14 = mul_2(byte)^mul_4(byte)^mul_8(byte);
+        mul_14 = mul_2(byteg)^mul_4(byteg)^mul_8(byteg);
 	
     end
   endfunction
@@ -123,6 +128,9 @@ out1=out;
 end
 endmodule
 
+
+//
+//128'h7cf22bab6b30767701fe7b6f0763c567
 
 //
 //128'h7cf22bab6b30767701fe7b6f0763c567
