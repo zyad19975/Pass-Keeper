@@ -43,4 +43,3 @@ module inv_subbytes(
 		end
 	
 endmodule
-
