@@ -33,6 +33,8 @@ Description :
 
 */
 
+`timescale 1ns / 1ps
+
 module inv_shift_rows(
 	input wire[127 : 0] in,
 	output reg[127 : 0] out
@@ -44,4 +46,5 @@ module inv_shift_rows(
 		end
 
 endmodule
+
 
