@@ -13,6 +13,8 @@ Description:
 	  mix columns, add round key
 	
 */
+`timescale 1ns / 1ps
+
 module inv_round (
 	input wire [127:0]in,
 	input wire last,
@@ -53,8 +55,8 @@ end
 			end
 			
 		end
-	
-	
-	
+
+			
 endmodule
+
 
