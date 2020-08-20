@@ -27,7 +27,7 @@ module aes(
     begin
       if( reset)
      begin
-       d = 1;
+       d <= 1;
        ready <= 0;
        
       end
