@@ -39,7 +39,7 @@ integer i;
 always@(negedge clk) begin
     if (rst)begin
         for (i = 0 ;i < (2**DATA_WIDTH) ; i = i+1 ) begin
-            mem[i] = 0;     
+            mem[i] <= 0;     
         end
     end
     else if (write) begin
