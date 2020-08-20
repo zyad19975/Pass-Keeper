@@ -154,7 +154,7 @@ module FSM(
                 done <= 0;
                 boot_done_signal <=0;
                 nextstate <= boot;
-                address_out = address_out +1;
+                address_out <= address_out +1;
             end
 
 
@@ -536,3 +536,4 @@ module FSM(
 
 
 endmodule
+    
