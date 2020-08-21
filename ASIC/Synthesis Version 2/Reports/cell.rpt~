@@ -1,0 +1,24 @@
+Warning: Design 'Hw_wrapper' has '2' unresolved references. For more detailed information, use the "link" command. (UID-341)
+ 
+****************************************
+Report : cell
+Design : Hw_wrapper
+Version: H-2013.03-SP1
+Date   : Thu Aug 16 16:51:56 2018
+****************************************
+
+Attributes:
+    b - black box (unknown)
+    h - hierarchical
+    n - noncombinational
+    r - removable
+   so - sizing only
+    u - contains unmapped logic
+
+Cell                      Reference       Library             Area  Attributes
+--------------------------------------------------------------------------------
+R1                        Top_level                       0.000000  b, so
+R2                        RAM_memory                      0.000000  b, so
+--------------------------------------------------------------------------------
+Total 2 cells                                             0.000000
+1

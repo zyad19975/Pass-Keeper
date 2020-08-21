@@ -1,0 +1,186 @@
+ 
+****************************************
+Report : area
+Design : Hw_wrapper
+Version: H-2013.03-SP1
+Date   : Wed Aug 22 01:23:31 2018
+****************************************
+
+Library(s) Used:
+
+    saed32hvt_ss0p7vn40c (File: /home/cadence/Desktop/synthesis_1/saed32hvt_ss0p7vn40c.db)
+
+Number of ports:                          521
+Number of nets:                          1038
+Number of cells:                            2
+Number of combinational cells:              0
+Number of sequential cells:                 0
+Number of macros/black boxes:               0
+Number of buf/inv:                          0
+Number of references:                       2
+
+Combinational area:             111391.569468
+Buf/Inv area:                     3847.740175
+Noncombinational area:          106046.416214
+Macro/Black Box area:                0.000000
+Net Interconnect area:          121735.554528
+
+Total cell area:                217437.985682
+Total area:                     339173.540210
+
+The above information was reported from the logical library. The following are from the physical library:
+
+Hierarchical area distribution
+------------------------------
+
+                                  Global cell area              Local cell area
+                                  --------------------  -------------------------------- 
+Hierarchical cell                 Absolute     Percent  Combi-       Noncombi-    Black-
+                                  Total        Total    national     national     boxes   Design
+--------------------------------  -----------  -------  -----------  -----------  ------  ---------------------------------
+Hw_wrapper                        217437.9857    100.0       0.0000       0.0000  0.0000  Hw_wrapper
+R1                                172410.2758     79.3       0.0000       0.0000  0.0000  Top_level
+R1/L1                             172127.9218     79.2    1119.2502       0.0000  0.0000  cde
+R1/L1/DEC                          43856.8682     20.2    1877.6159    2617.4291  0.0000  inv_aes
+R1/L1/DEC/as1                      22385.0041     10.3    7490.8946   11054.7561  0.0000  Get_key
+R1/L1/DEC/as1/key                   3839.3534      1.8    3839.3534       0.0000  0.0000  keygen_1
+R1/L1/DEC/r1                       16976.8191      7.8     422.8956       0.0000  0.0000  inv_round
+R1/L1/DEC/r1/adk                     553.0173      0.3     553.0173       0.0000  0.0000  inv_add_round_keys
+R1/L1/DEC/r1/mc                     3598.6790      1.7    3598.6790       0.0000  0.0000  inv_Mix_Column
+R1/L1/DEC/r1/sb                    12402.2272      5.7       0.0000       0.0000  0.0000  inv_subbytes
+R1/L1/DEC/r1/sb/sb1                  775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_0
+R1/L1/DEC/r1/sb/sb10                 775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_7
+R1/L1/DEC/r1/sb/sb11                 775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_6
+R1/L1/DEC/r1/sb/sb12                 775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_5
+R1/L1/DEC/r1/sb/sb13                 775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_4
+R1/L1/DEC/r1/sb/sb14                 775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_3
+R1/L1/DEC/r1/sb/sb15                 775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_2
+R1/L1/DEC/r1/sb/sb16                 775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_1
+R1/L1/DEC/r1/sb/sb2                  775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_15
+R1/L1/DEC/r1/sb/sb3                  775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_14
+R1/L1/DEC/r1/sb/sb4                  775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_13
+R1/L1/DEC/r1/sb/sb5                  775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_12
+R1/L1/DEC/r1/sb/sb6                  775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_11
+R1/L1/DEC/r1/sb/sb7                  775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_10
+R1/L1/DEC/r1/sb/sb8                  775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_9
+R1/L1/DEC/r1/sb/sb9                  775.1392      0.4     775.1392       0.0000  0.0000  inv_sbox_8
+R1/L1/DEC/r1/sr                        0.0000      0.0       0.0000       0.0000  0.0000  inv_shift_rows
+R1/L1/ENC                          22072.1522     10.2     900.6864    1731.2290  0.0000  aes
+R1/L1/ENC/adk_0                      553.0173      0.3     553.0173       0.0000  0.0000  add_round_keys_0
+R1/L1/ENC/r1                       18887.2195      8.7     427.2161       0.0000  0.0000  round
+R1/L1/ENC/r1/adk                     553.0173      0.3     553.0173       0.0000  0.0000  add_round_keys_1
+R1/L1/ENC/r1/mc                     1685.7371      0.8    1685.7371       0.0000  0.0000  Mix_Column
+R1/L1/ENC/r1/sb                    12381.8956      5.7       0.0000       0.0000  0.0000  subbytes
+R1/L1/ENC/r1/sb/sb1                  773.8685      0.4     773.8685       0.0000  0.0000  sbox_0
+R1/L1/ENC/r1/sb/sb10                 773.8685      0.4     773.8685       0.0000  0.0000  sbox_7
+R1/L1/ENC/r1/sb/sb11                 773.8685      0.4     773.8685       0.0000  0.0000  sbox_6
+R1/L1/ENC/r1/sb/sb12                 773.8685      0.4     773.8685       0.0000  0.0000  sbox_5
+R1/L1/ENC/r1/sb/sb13                 773.8685      0.4     773.8685       0.0000  0.0000  sbox_4
+R1/L1/ENC/r1/sb/sb14                 773.8685      0.4     773.8685       0.0000  0.0000  sbox_3
+R1/L1/ENC/r1/sb/sb15                 773.8685      0.4     773.8685       0.0000  0.0000  sbox_2
+R1/L1/ENC/r1/sb/sb16                 773.8685      0.4     773.8685       0.0000  0.0000  sbox_1
+R1/L1/ENC/r1/sb/sb2                  773.8685      0.4     773.8685       0.0000  0.0000  sbox_15
+R1/L1/ENC/r1/sb/sb3                  773.8685      0.4     773.8685       0.0000  0.0000  sbox_14
+R1/L1/ENC/r1/sb/sb4                  773.8685      0.4     773.8685       0.0000  0.0000  sbox_13
+R1/L1/ENC/r1/sb/sb5                  773.8685      0.4     773.8685       0.0000  0.0000  sbox_12
+R1/L1/ENC/r1/sb/sb6                  773.8685      0.4     773.8685       0.0000  0.0000  sbox_11
+R1/L1/ENC/r1/sb/sb7                  773.8685      0.4     773.8685       0.0000  0.0000  sbox_10
+R1/L1/ENC/r1/sb/sb8                  773.8685      0.4     773.8685       0.0000  0.0000  sbox_9
+R1/L1/ENC/r1/sb/sb9                  773.8685      0.4     773.8685       0.0000  0.0000  sbox_8
+R1/L1/ENC/r1/sr                        0.0000      0.0       0.0000       0.0000  0.0000  shift_rows
+R1/L1/ENC/r1/x                      3839.3534      1.8    3839.3534       0.0000  0.0000  keygen_0
+R1/L1/cam_inst                     96839.2859     44.5     420.8625      20.3315  0.0000  cam_DATA_WIDTH128_ADDR_WIDTH4
+R1/L1/cam_inst/encoder_inst1          99.8786      0.0      57.1824      26.4310  0.0000  encoder_WIDTH16
+R1/L1/cam_inst/encoder_inst1/slice[0].enc_inst
+                                       2.0332      0.0       2.0332       0.0000  0.0000  encoder_2_1_0
+R1/L1/cam_inst/encoder_inst1/slice[10].enc_inst
+                                       2.0332      0.0       2.0332       0.0000  0.0000  encoder_2_1_3
+R1/L1/cam_inst/encoder_inst1/slice[12].enc_inst
+                                       2.0332      0.0       2.0332       0.0000  0.0000  encoder_2_1_2
+R1/L1/cam_inst/encoder_inst1/slice[14].enc_inst
+                                       2.0332      0.0       2.0332       0.0000  0.0000  encoder_2_1_1
+R1/L1/cam_inst/encoder_inst1/slice[2].enc_inst
+                                       2.0332      0.0       2.0332       0.0000  0.0000  encoder_2_1_7
+R1/L1/cam_inst/encoder_inst1/slice[4].enc_inst
+                                       2.0332      0.0       2.0332       0.0000  0.0000  encoder_2_1_6
+R1/L1/cam_inst/encoder_inst1/slice[6].enc_inst
+                                       2.0332      0.0       2.0332       0.0000  0.0000  encoder_2_1_5
+R1/L1/cam_inst/encoder_inst1/slice[8].enc_inst
+                                       2.0332      0.0       2.0332       0.0000  0.0000  encoder_2_1_4
+R1/L1/cam_inst/slice[0].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_0
+R1/L1/cam_inst/slice[10].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_22
+R1/L1/cam_inst/slice[11].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_21
+R1/L1/cam_inst/slice[12].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_20
+R1/L1/cam_inst/slice[13].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_19
+R1/L1/cam_inst/slice[14].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_18
+R1/L1/cam_inst/slice[15].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_17
+R1/L1/cam_inst/slice[16].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_16
+R1/L1/cam_inst/slice[17].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_15
+R1/L1/cam_inst/slice[18].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_14
+R1/L1/cam_inst/slice[19].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_13
+R1/L1/cam_inst/slice[1].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_31
+R1/L1/cam_inst/slice[20].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_12
+R1/L1/cam_inst/slice[21].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_11
+R1/L1/cam_inst/slice[22].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_10
+R1/L1/cam_inst/slice[23].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_9
+R1/L1/cam_inst/slice[24].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_8
+R1/L1/cam_inst/slice[25].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_7
+R1/L1/cam_inst/slice[26].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_6
+R1/L1/cam_inst/slice[27].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_5
+R1/L1/cam_inst/slice[28].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_4
+R1/L1/cam_inst/slice[29].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_3
+R1/L1/cam_inst/slice[2].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_30
+R1/L1/cam_inst/slice[30].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_2
+R1/L1/cam_inst/slice[31].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_1
+R1/L1/cam_inst/slice[3].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_29
+R1/L1/cam_inst/slice[4].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_28
+R1/L1/cam_inst/slice[5].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_27
+R1/L1/cam_inst/slice[6].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_26
+R1/L1/cam_inst/slice[7].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_25
+R1/L1/cam_inst/slice[8].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_24
+R1/L1/cam_inst/slice[9].ram_dp_inst
+                                    3009.3192      1.4    1212.0127    1797.3064  0.0000  ram_dp_DATA_WIDTH4_ADDR_WIDTH4_23
+R1/L1/reg_flash_account             1177.1950      0.5     331.4038     845.7913  0.0000  reg_D_6
+R1/L1/reg_flash_or_acc              1177.1950      0.5     331.4038     845.7913  0.0000  reg_D_0
+R1/L1/reg_flash_pass                1177.1950      0.5     331.4038     845.7913  0.0000  reg_D_5
+R1/L1/reg_local_master              1177.1950      0.5     331.4038     845.7913  0.0000  reg_D_2
+R1/L1/reg_out_reg                   1177.1950      0.5     331.4038     845.7913  0.0000  reg_D_1
+R1/L1/reg_pass_enc                  1177.1950      0.5     331.4038     845.7913  0.0000  reg_D_4
+R1/L1/reg_plain_reg                 1177.1950      0.5     331.4038     845.7913  0.0000  reg_D_3
+R1/L2                                282.3540      0.1     185.7793      96.5747  0.0000  FSM
+R2                                 45027.7099     20.7   17962.3896   27065.3203  0.0000  RAM_memory
+--------------------------------  -----------  -------  -----------  -----------  ------  ---------------------------------
+Total                                                   111391.5695  106046.4162  0.0000
+
+1

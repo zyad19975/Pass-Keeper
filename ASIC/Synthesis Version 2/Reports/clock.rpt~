@@ -1,0 +1,22 @@
+Warning: Design 'Hw_wrapper' has '2' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Information: Updating graph... (UID-83)
+ 
+****************************************
+Report : clocks
+Design : Hw_wrapper
+Version: H-2013.03-SP1
+Date   : Thu Aug 16 16:51:54 2018
+****************************************
+
+Attributes:
+    d - dont_touch_network
+    f - fix_hold
+    p - propagated_clock
+    G - generated_clock
+    g - lib_generated_clock
+
+Clock          Period   Waveform            Attrs     Sources
+--------------------------------------------------------------------------------
+clk             10.00   {0 5}                         {clk}
+--------------------------------------------------------------------------------
+1
