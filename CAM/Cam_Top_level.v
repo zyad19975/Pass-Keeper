@@ -62,10 +62,10 @@ ram_dp_inst(
 end
 endgenerate
 encoder #(
-            .WIDTH(2**ADDR_WIDTH),
-            .LSB_PRIORITY("HIGH")
+            .WIDTH(2**ADDR_WIDTH)
         )
         encoder_inst1 (
+            .clk(clk),
             .input_unencoded(match_addr_unencoded),
             .output_valid(match_w),
             .output_encoded(match_addr_w)
