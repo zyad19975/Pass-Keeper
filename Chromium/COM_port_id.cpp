@@ -15,7 +15,7 @@ void GetComPort(TCHAR* pszComePort, const wchar_t* vid, const wchar_t* pid)
     HDEVINFO DeviceInfoSet;
     DWORD DeviceIndex = 0;
     SP_DEVINFO_DATA DeviceInfoData;
-    PCWSTR DevEnum = L"USB";
+    PCWSTR DevEnum = L"FTDIBUS";
     TCHAR ExpectedDeviceId[80] = { 0 }; //Store hardware id
     BYTE szBuffer[1024] = { 0 };
     DEVPROPTYPE ulPropertyType;
