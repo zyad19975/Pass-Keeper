@@ -23,7 +23,7 @@ module aes(
   round r1 (adk_in,round_number,key_round,keyout,out);
   assign cipher_text = out;
 
-  always @(posedge clk)
+	always @(posedge clk or posedge reset)
     begin
       if( reset)
      begin
