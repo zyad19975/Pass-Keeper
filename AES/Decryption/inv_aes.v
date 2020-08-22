@@ -64,7 +64,7 @@ Description :
  
  reg flag;
  
- always @(posedge clk)
+ always @(posedge clk or posedge rest)
      begin
        
        if (rest)

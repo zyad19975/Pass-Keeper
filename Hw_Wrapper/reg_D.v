@@ -6,7 +6,7 @@ module reg_D(input clk,
              output reg [127:0] out );
 
 
-     always @(posedge clk )
+     always @(posedge clk or posedge rst)
      begin
         if(rst)
           out<=0;
@@ -14,3 +14,4 @@ module reg_D(input clk,
           out <= in;
      end         
 endmodule 
+

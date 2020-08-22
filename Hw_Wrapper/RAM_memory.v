@@ -34,19 +34,24 @@ module RAM_memory(
 	// Variable to hold the registered read address
 	//reg [3:0] addr_reg;
 	integer i;
-	always @ (posedge clk)
+	always @ (posedge clk or posedge rst or posedge we)
 	begin
 	// Write
-	   if (rst) begin 
-	   for (i = 0 ;i < (16) ; i = i+1 ) begin
-           ram[i] <= 0;     
-           end
+	   if (rst)
+	   begin 
+	   	for (i = 0 ;i < (16) ; i = i+1 )
+		begin
+           		ram[i] <= 0;     
+           	end
 	   end
-		if (we)
-			ram[addr] <= data;
-		
+	   else if (we)
+	   begin
+		ram[addr] <= data;	
 		//addr_reg <= addr;
-		
+	   end
+	   else
+	   begin
+	   end
 	end
 		
 	// Continuous assignment implies read returns NEW data.

@@ -35,7 +35,7 @@ reg [127:0]keys[0:10];
 
 
 
-always @(posedge clk )
+always @(posedge clk or posedge rest)
 begin
     if(rest) // go to state zero if rese
         begin

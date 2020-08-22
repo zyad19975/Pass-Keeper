@@ -29,9 +29,10 @@ module cde( input clk,
             output [3:0] add_flash,
             output [127:0] final_output
     );
+
     parameter  ADDR_WIDTH =4;
-    //parameter loacal_key = 128'h00000000000000000000000000000000;
-     wire [127:0]loacal_key = 128'h00000000000000000000000000000000;
+    wire [127:0] loacal_key = 128'h00000000000000000000000000000000;
+
     
     wire dec_busy;
     //////////////////////// cam

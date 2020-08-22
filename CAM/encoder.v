@@ -16,8 +16,9 @@ module encoder #
 wire  [(WIDTH/2)-1:0] encoded;
 wire  [(WIDTH/2)-1:0] out;
 
-genvar enc_slice;
+
 generate
+genvar enc_slice; // i moved this here
 for (enc_slice = 0; enc_slice < WIDTH; enc_slice = enc_slice + 2) begin : slice
         
         encoder_2_1 enc_inst

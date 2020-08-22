@@ -36,17 +36,43 @@ reg [(2**ADDR_WIDTH)-1:0]   b_dout_reg;
 
 integer i;
 
-always@(negedge clk) begin
-    if (rst)begin
+always@(negedge clk or posedge rst or posedge write)
+begin
+    if (rst)
+    begin
         for (i = 0 ;i < (2**DATA_WIDTH) ; i = i+1 ) begin
             mem[i] <= 0;     
         end
     end
-    else if (write) begin
-            mem[a_din][a_addr] <= 1'b1;
-    end 
+    else if (write)
+    begin
+    	mem[a_din][a_addr] <= 1'b1;
+    end
+    else begin
     b_dout <= mem[b_din];
-
+    end
+    
 end
 
 endmodule
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

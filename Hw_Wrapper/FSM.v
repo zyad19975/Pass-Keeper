@@ -37,7 +37,7 @@ module FSM(
     parameter wait_enc = 12,        not_matched = 13,       encrypt_load = 14; 
     parameter wait_encrypt = 15,    falsh_write = 16,       out = 17;
     parameter wait_dec = 18;
-    
+
 
     always @(posedge clk, posedge rst)
     begin
@@ -536,4 +536,3 @@ module FSM(
 
 
 endmodule
-    

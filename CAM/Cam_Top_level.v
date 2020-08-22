@@ -35,8 +35,9 @@ wire [(2**ADDR_WIDTH)-1:0] match_addr_unencoded;
 wire [(2**ADDR_WIDTH)-1:0] match_addr_unencoded_raw [SLICE_COUNT : 0];
 
 assign match = match_w; 
-genvar slice_ind;
+
 generate
+genvar slice_ind; //i removed this here instead of outside the generate block
 for (slice_ind = 0; slice_ind < SLICE_COUNT; slice_ind = slice_ind + 1) begin : slice
 
 localparam start = slice_ind*SLICE_WIDTH;
