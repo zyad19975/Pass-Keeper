@@ -1,0 +1,24 @@
+ 
+****************************************
+Report : cell
+Design : Hw_wrapper
+Version: H-2013.03-SP1
+Date   : Thu Aug 23 06:56:46 2018
+****************************************
+
+Attributes:
+    b - black box (unknown)
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    u - contains unmapped logic
+
+Cell                      Reference       Library             Area  Attributes
+--------------------------------------------------------------------------------
+R1                        Top_level                       163853.245738
+                                                                    h, n
+R2                        RAM_memory                      29328.471764
+                                                                    h, n
+--------------------------------------------------------------------------------
+Total 2 cells                                             193181.717502
+1
