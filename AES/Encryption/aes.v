@@ -27,6 +27,9 @@ module aes(
     begin
       if( reset)
      begin
+	round_number <= 0;
+  	adk_in<=0;
+ 	key_round <= 0;
        d <= 1;
        ready <= 0;
        
