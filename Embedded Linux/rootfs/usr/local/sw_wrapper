@@ -1,0 +1,80 @@
+<?php
+define("USER_FILE", "/root/user.txt");
+define("USERS_FILE", "/root/users.db");
+//INIT
+if (!file_exists(USER_FILE)) touch(USER_FILE);
+if (!file_exists(USERS_FILE)) touch(USER_FILE);
+//
+function response($output)
+{
+	echo json_encode($output)."\n";
+}
+function filter_whitespaces($input)
+{
+	return trim(preg_replace('/\s\s+/', ' ', $input));	
+}
+function read_line()
+{
+	return filter_whitespaces(readline());
+}
+
+$allowed_functions = array("heartbeat", "list_users", "get_current", "set_current", "add_account", "encrypt_request");
+//BEGIN ALLOWED FUNCTIONS
+function encrypt_request()
+{
+	//TODO: Use bootstrapper.php that will be provided by @emadmasri40
+}
+function heartbeat()
+{
+	return true;
+}
+function list_users()
+{
+	$fhandle = fopen(USERS_FILE,"r");
+	$i = 0;
+	$accounts = [];
+	while(($line = fgets($fhandle)) !== false)
+	{
+		$i++;
+		if ($i%2 != 0)
+		{
+			$line = trim(preg_replace('/\s\s+/', ' ', $line));
+			$accounts[] = $line;
+		}
+	}
+	if ($fhandle)
+		fclose($fhandle);
+	return $accounts;
+}
+function get_current()
+{
+	$handle = fopen(USER_FILE, "r");
+	$line = filter_whitespaces(fgets($handle));
+	return $line;
+}
+function set_current()
+{
+	$username = read_line();
+	return file_put_contents(USER_FILE, $username)? true : false;
+}
+function add_account()
+{
+	$username = read_line();
+	$password = read_line();
+	if (in_array($username, list_users())) return "Username already exists.";
+	if (strlen($username) <= 16 && strlen($password) <= 16) //max: 16 chars for each
+	{
+		return file_put_contents(USERS_FILE, $username."\n".$password."\n", FILE_APPEND)? true : false;
+	}
+	return false;
+}
+//END ALLOWED FUNCTIONS
+while(true)
+{
+	$cmd = readline();
+	if (in_array($cmd, $allowed_functions) && function_exists($cmd))
+		response($cmd());
+	else
+		response(""); //Bad request.
+}
+?>

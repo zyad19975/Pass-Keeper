@@ -1,3 +1,3 @@
 #/bin/sh
 
-exec /usr/local/sw_wrapper
+exec php /usr/local/sw_wrapper
