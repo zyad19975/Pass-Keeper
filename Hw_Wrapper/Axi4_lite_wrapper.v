@@ -1,10 +1,10 @@
 
 `timescale 1 ns / 1 ps
 
-	module Pass_keeper_final_v1_0_S00_AXI #
+	module Pass_keeper_v1_0_S00_AXI #
 	(
 		// Users to add parameters here
-
+        
 		// User parameters ends
 		// Do not modify the parameters beyond this line
 
@@ -15,17 +15,10 @@
 	)
 	(
 		// Users to add ports here
-            
-        output [3:0]state,
-        output done,
-        output boot_done,
-        output [31:0]o1,
-        output [31:0]o2,
-        output [31:0]o3,
-        output [31:0]o4, 
+
 		// User ports ends
 		// Do not modify the ports beyond this line
-
+        
 		// Global Clock Signal
 		input wire  S_AXI_ACLK,
 		// Global Reset Signal. This Signal is Active LOW
@@ -99,7 +92,14 @@
 	reg [C_S_AXI_DATA_WIDTH-1 : 0] 	axi_rdata;
 	reg [1 : 0] 	axi_rresp;
 	reg  	axi_rvalid;
-
+    
+    
+    wire done;
+    wire boot_done;
+    wire [31:0]o1;
+    wire [31:0]o2;
+    wire [31:0]o3;
+    wire [31:0]o4; 
 	// Example-specific design signals
 	// local parameter for addressing 32 bit / 64 bit C_S_AXI_DATA_WIDTH
 	// ADDR_LSB is used for addressing 32/64 bit registers/memories
@@ -110,7 +110,7 @@
 	//----------------------------------------------
 	//-- Signals for user logic register space example
 	//------------------------------------------------
-	//-- Number of Slave Registers 22
+	//-- Number of Slave Registers 20
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg0;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg1;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg2;
@@ -131,8 +131,6 @@
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg17;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg18;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg19;
-	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg20;
-	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg21;
 	wire	 slv_reg_rden;
 	wire	 slv_reg_wren;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	 reg_data_out;
@@ -265,8 +263,6 @@
 	      slv_reg17 <= 0;
 	      slv_reg18 <= 0;
 	      slv_reg19 <= 0;
-	      slv_reg20 <= 0;
-	      slv_reg21 <= 0;
 	    end 
 	  else begin
 	    if (slv_reg_wren)
@@ -412,20 +408,6 @@
 	                // Slave register 19
 	                slv_reg19[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 	              end  
-	          5'h14:
-	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
-	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
-	                // Respective byte enables are asserted as per write strobes 
-	                // Slave register 20
-	                slv_reg20[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-	              end  
-	          5'h15:
-	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
-	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
-	                // Respective byte enables are asserted as per write strobes 
-	                // Slave register 21
-	                slv_reg21[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-	              end  
 	          default : begin
 	                      slv_reg0 <= slv_reg0;
 	                      slv_reg1 <= slv_reg1;
@@ -447,8 +429,6 @@
 	                      slv_reg17 <= slv_reg17;
 	                      slv_reg18 <= slv_reg18;
 	                      slv_reg19 <= slv_reg19;
-	                      slv_reg20 <= slv_reg20;
-	                      slv_reg21 <= slv_reg21;
 	                    end
 	        endcase
 	      end
@@ -571,14 +551,12 @@
 	        5'h0B   : reg_data_out <= slv_reg11;
 	        5'h0C   : reg_data_out <= slv_reg12;
 	        5'h0D   : reg_data_out <= slv_reg13;
-	        5'h0E   : reg_data_out <= slv_reg14;
-	        5'h0F   : reg_data_out <= state;
-            5'h10   : reg_data_out <= o1;
-            5'h11   : reg_data_out <= o2;
-            5'h12   : reg_data_out <= o3;
-            5'h13   : reg_data_out <= o4;
-            5'h14   : reg_data_out <= done;
-	        5'h15   : reg_data_out <= boot_done;
+	        5'h0E   : reg_data_out <= done;
+	        5'h0F   : reg_data_out <= o1;
+	        5'h10   : reg_data_out <= o2;
+	        5'h11   : reg_data_out <= o3;
+	        5'h12   : reg_data_out <= o4;
+	        5'h13   : reg_data_out <= boot_done;
 	        default : reg_data_out <= 0;
 	      endcase
 	end
@@ -604,18 +582,17 @@
 
 	// Add user logic here
     Hw_wrapper hw(
-        .clk(S_AXI_ACLK),
-        .go(slv_reg1),
-        .rst((!S_AXI_ARESETN)),
-        .master_key({slv_reg3,slv_reg4,slv_reg5,slv_reg6}),
-        .account({slv_reg7,slv_reg8,slv_reg9,slv_reg10}),
-        .password({slv_reg11,slv_reg12,slv_reg13,slv_reg14}),
-        .max_address(slv_reg2),
-        .state(state),
-        .done(done),
-        .password_enc({o1,o2,o3,o4}),
-        .boot_done_signal(boot_done)
-        );
-    // User logic ends
+            .clk(S_AXI_ACLK),
+            .go(slv_reg0),
+            .rst((!S_AXI_ARESETN)),
+            .master_key({slv_reg1,slv_reg2,slv_reg3,slv_reg4}),
+            .account({slv_reg5,slv_reg6,slv_reg7,slv_reg8}),
+            .password({slv_reg9,slv_reg10,slv_reg11,slv_reg12}),
+            .max_address(slv_reg13),
+            .done(done),
+            .password_enc({o1,o2,o3,o4}),
+            .boot_done_signal(boot_done)
+            );
+	// User logic ends
 
 	endmodule

@@ -4,6 +4,7 @@ Pass keeper IC is used to securely save and mange all your passwords it connects
 **1.RTL**
 **2.Linux**
 **3.Chroumium**
+**4.ASIC**
 
 ### RTL
 The hardware used for this project mainly depends on the FPGA as a development board to implement the hardware core on it for testing and verification before ASIC implementation.
@@ -20,4 +21,11 @@ and it also used to interface with the custome hardware module to send input dat
 ### Chroumium
 a custom web browser based on chroumium was created to remove the ssl page encryption from the web browser and insted send the data to the fpga and an web application was made to replace the old hardware manger implemented on the chroumium.
 
+### ASIC
+the design run and the netlist out put of the compiled design by ICC to generate the ASIC netlist
+
 you can check full documentation [here](https://docs.google.com/document/d/1N3bH1BNMT8D9PLzdRzl_fX-cvAPWpY2PHtI4gaxJHfg/edit?usp=sharing)
+
+
+
+
