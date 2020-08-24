@@ -1,5 +1,8 @@
-# GraduationProject_2019_2020
-Pass keeper IC is used to securely save and mange all your passwords it connects to your computer using usb, it acts as your password manager. The user will use it as using the normal password manager that is built inside the web browser you login for the first time in a website the web browser asks if you want to save the new password, but instead of saving it locally it will send the account and password to our Pass keeper IC using usb, Pass keeper then will encrypt the password using 128-bit AES encryption and save it in it’s internal memory,  once you decided to login again to the same website, web browser will send only the account and pass keeper will search of the equivalent password in the internal CAM that will be encrypted using AES so it have to be decrypted before it encrypted again using session key generated for the site authentication.
+# PassKeeper
+Pass keeper IC is used to securely save and mange all your passwords. It connects to your computer using USB and acts as your password manager.
+
+Our modified browser (which is based on Chromium) comes with a GUI for the PassKeeper system that allows users to save username and password combinations securely on the FPGA. Users are able to select the user they would like to login with afterwards, and by clicking on the `Login` button on any website without filling the username/password fields, users are able to login securely without communicating the stored username/password combinations outside of the FPGA.
+
 ## Structure 
 **1.RTL**
 **2.Linux**
@@ -15,16 +18,18 @@ it is divided into two main part
 Advanced Encryption/Decryption Standard (AES)  is an approved cryptographic algorithm that can be used to protect electronic data. The AES can be programmed in software or built with pure hardware. However, Field Programmable Gate Arrays (FPGAs) offer a quicker and more customizable solution 
 
 ### Linux
-we used linux as the base of most operations, as we need USB/IP protocol we used the internal drivers for this protocol to remove the headache of implementing it using ip core or rtl.
-and it also used to interface with the custome hardware module to send input data and to retrive the outputs then use openssl to page encrypt the request and send it directly
+The FPGA comes with a Linux operating system, which uses the software wrapper explained inside `Embedded Linux/Software_Wrapper/README.md` for its operations.
 
-### Chroumium
-a custom web browser based on chroumium was created to remove the ssl page encryption from the web browser and insted send the data to the fpga and an web application was made to replace the old hardware manger implemented on the chroumium.
+### Custom Browser (based on Chroumium)
+A custom web browser based on Chroumium is used to communicate with the FPGA and send passwordless HTTP requests. The FPGA later returns the HTTP response from the web server after providing the username/password, which the browser processes and displays to the user, therefore allowing users to login without having to type the username/password combinations and keeping such information stored on the FPGA.
+
+Moreover, the custom browser comes with a custom GUI which is used to manage stored users (i.e use for logging in or change password) or add new users.
 
 ### ASIC
-the design run and the netlist out put of the compiled design by ICC to generate the ASIC netlist
 
-you can check full documentation [here](https://docs.google.com/document/d/1N3bH1BNMT8D9PLzdRzl_fX-cvAPWpY2PHtI4gaxJHfg/edit?usp=sharing)
+The design run and the netlist output of the compiled design by ICC to generate the ASIC netlist.
+
+You can check the full documentation [here](https://docs.google.com/document/d/1N3bH1BNMT8D9PLzdRzl_fX-cvAPWpY2PHtI4gaxJHfg/edit?usp=sharing)
 
 
 
