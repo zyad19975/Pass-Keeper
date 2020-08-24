@@ -43,6 +43,7 @@ function aes_decrypt($ciphertext, $key) //ciphertext in hex
 function retrieve_password($username)
 {
 	exec("/bin/sh /usr/local/interface.sh ". bin2hex($username) . " " . MASTER_KEY);
+	sleep(5);
 	$enc_pass = read_memory("0x43c0003C").read_memory("0x43c00040").read_memory("0x43c00044").read_memory("0x43c00048");
 	$password = str_replace("\x00", "", aes_decrypt($enc_pass, hex2bin(MASTER_KEY)));
 	/*
@@ -68,18 +69,13 @@ function read_memory($address)
 	 return substr(trim($output[0]), 2);
 }
 //
-$allowed_functions = array("heartbeat", "list_users", "get_current", "set_current", "add_account", "encrypt_request", "get_pw");
+$allowed_functions = array("heartbeat", "list_users", "get_current", "set_current", "add_account", "encrypt_request");
 //GLOBAL PARAMETERS
 $username_parameters = array("username", "email", "account", "log");
 $password_parameters = array("password", "pass", "passwd", "pwd");
 //
 
 //BEGIN ALLOWED FUNCTIONS
-function get_pw()
-{
-	$username = readline();
-	return retrieve_password($username);
-}
 function encrypt_request()
 {
 	global $username_parameters, $password_parameters;

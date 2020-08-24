@@ -73,4 +73,3 @@ fi
 devmem2 0x43C00000 w 0x01
 echo "Starting......"
 devmem2 0x43C00000 w 0x0
-sleep 5
