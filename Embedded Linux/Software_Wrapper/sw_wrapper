@@ -82,6 +82,12 @@ function encrypt_request()
 	$hostname = read_line();
 	$port = read_line();
 	$username = get_current();
+	if (!$username)
+	{
+		echo "\nBEGIN_RESPONSE\n";
+		echo "\nEND_OF_RESPONSE\n";
+		return;
+	}
 	$password = retrieve_password($username);
 	
 	$input = array();
