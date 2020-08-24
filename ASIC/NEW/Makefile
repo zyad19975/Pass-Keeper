@@ -1,9 +1,0 @@
-all: clean comp run
-clean:
-\rm -rf simv* csrc* *.log
-comp:
-vcs -timescale=1ns/1ps -sverilog +define+TRACE_VPD -debug_access+r -l comp.log saed32nm_hvt.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_0.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_31.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_30.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_29.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_28.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_27.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_26.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_25.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_24.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_23.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_22.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_21.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_20.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_19.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_18.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_17.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_16.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_15.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_14.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_13.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_12.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_11.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_10.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_9.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_8.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_7.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_6.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_5.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_4.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_3.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_2.v ram_dp_DATA_WIDTH4_ADDR_WIDTH4_1.v encoder_2_1_0.v encoder_2_1_7.v encoder_2_1_6.v encoder_2_1_5.v encoder_2_1_4.v encoder_2_1_3.v encoder_2_1_2.v encoder_2_1_1.v encoder_WIDTH16.v cam_DATA_WIDTH128_ADDR_WIDTH4.v test.sv
-./simv test -debug_all -debug_access+r -l run.log
-
-
-
