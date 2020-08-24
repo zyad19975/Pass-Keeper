@@ -10,11 +10,12 @@ Our modified browser (which is based on Chromium) comes with a GUI for the PassK
 **4.ASIC**
 
 ### RTL
-The hardware used for this project mainly depends on the FPGA as a development board to implement the hardware core on it for testing and verification before ASIC implementation.
-it is divided into two main part 
-**1.CAM**
-  CAM performs content matching rather than the address matching performed by standard memory cores. The content matching approach enables faster data searches than can be achieved by sequentially checking each address location in a standard memory for a particular value. The higher speed searches are achieved by using content values as an index into a database of address values. The additional ability to perform content compares in parallel enables even higher speed searches. A set of scripts is included with the CAM reference design that allow the customization of width, depth, memory type, and optional features.
-**2.AES**
+The hardware used for this project mainly depends on the FPGA as a development board to implement the hardware core on it for testing and verification before ASIC implementation. This is divided into two main parts explained below.
+
+#### 1.CAM
+CAM performs content matching rather than the address matching performed by standard memory cores. The content matching approach enables faster data searches than can be achieved by sequentially checking each address location in a standard memory for a particular value. The higher speed searches are achieved by using content values as an index into a database of address values. The additional ability to perform content compares in parallel enables even higher speed searches. A set of scripts is included with the CAM reference design that allow the customization of width, depth, memory type, and optional features.
+
+#### 2.AES
 Advanced Encryption/Decryption Standard (AES)  is an approved cryptographic algorithm that can be used to protect electronic data. The AES can be programmed in software or built with pure hardware. However, Field Programmable Gate Arrays (FPGAs) offer a quicker and more customizable solution 
 
 ### Linux
