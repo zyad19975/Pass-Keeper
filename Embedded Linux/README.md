@@ -1,119 +1,118 @@
-# Embedded Linux on FPGA Zybo-Zynq7000 
+## Installation of Linux
+As a Linux distribution is used on the FPGA for simplicity and to provide the necessary software for communications between the FPGA and the connected computer, interfacing between the software and hardware of the FPGA inside the Linux system is necessary so that the FPGA can use the custom-built hardware through the Linux system.
 
-## Git required files
+This section explains how PetaLinux was used with the Zybo ZYNQ Z7-20 FPGA board to compile the necessary boot files with the custom logic as well as install the OS distribution.
 
-we will use [Yocto](https://www.yoctoproject.org/docs/2.0/yocto-project-qs/yocto-project-qs.html) project as an open-source project to build our Linux image.
+### Prerequisites
+Before proceeding, the following prerequisites should be present:
+1. Bitstream file (.bit)
+2. Hardware Description File (.hdf)
+3. PetaLinux v2017.4 for Linux  (https://www.xilinx.com/member/forms/download/xef.html?filename=petalinux-v2017.4-final-installer.run)
+4. A Ubuntu Desktop 16.04 machine
+5. A desktop environment. If not available, use VNC server.
+6. SD card, and make sure that you know the device name/path of the SD card.
 
-### First we will start by installing the required tools.
-
-```bash
-
-# Ubuntu and Debian
-
-$ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib \
-  build-essential chrpath socat libsdl1.2-dev xterm```
-
-# Fedora
-$ sudo dnf install gawk make wget tar bzip2 gzip python unzip perl patch \
-  diffutils diffstat git cpp gcc gcc-c++ glibc-devel texinfo chrpath \
-  ccache perl-Data-Dumper perl-Text-ParseWords perl-Thread-Queue socat \
-  findutils which SDL-devel xterm
-
-# OpenSUSE
-
-$ sudo zypper install python gcc gcc-c++ git chrpath make wget python-xml \
-  diffstat makeinfo python-curses patch socat libSDL-devel xterm
-
-# CentOS
-
-$ sudo yum install gawk make wget tar bzip2 gzip python unzip perl patch \
-  diffutils diffstat git cpp gcc gcc-c++ glibc-devel texinfo chrpath socat \
-  perl-Data-Dumper perl-Text-ParseWords perl-Thread-Queue SDL-devel xterm
+### Installing PetaLinux
+On your Ubuntu Desktop 16.04 machine, download the PetaLinux v2017.4 for Linux and then execute the following as root assuming the downloaded file name is `petalinux-v2017.4-final-installer.run`:
 
 ```
-
-### Second get the right project files
-First clone Yocto project files using:
-```bash
-$ git clone git://git.yoctoproject.org/poky
+# useradd -m xlnxuser
+# mkdir -p /opt/pkg/petalinux
+# mv petalinux-v2017.4-final-installer.run /home/xlnxuser/
+# chown xlnxuser:xlnxuser /home/xlnxuser/petalinux-v2017.4-final-installer.run
+# chown -R xlnxuser:xlnxuser /opt/pkt/petalinux
+# apt-get install tofrodos gawk xvfb git libncurses5-dev tftpd zlib1g-dev zlib1g-dev:i386 libssl-dev flex bison chrpath socat autoconf libtool texinfo gcc-multilib libsdl1.2-dev libglib2.0-dev screen pax xterm build-essential
+# su xlnxuser
+$ cd ~
+$ chmod +x petalinux-v2017.4-final-installer.run
+$ ./petalinux-v2017.4-final-installer.run /opt/pkt/petalinux
+$ mkdir ~/petalinux_projects
+$ mkdir -p ~/.swt/lib/linux/x86_64/
+$ apt-get install libswt-gtk-3-jni libswt-gtk-3-java
+$ ln -s /usr/lib/jni/libswt-* ~/.swt/lib/linux/x86_64/
+$ cd ~/petalinux_projects
+$ mkdir PassKeeper
+$ source /opt/pkg/petalinux/settings.sh
+$ #make sure that you are connected via a graphical desktop environment or an X server for the next steps
+$ petalinux-create --type project --template zynq --name PassKeeper
+$ cd PassKeeper
+$ mkdir hw_platform
+$ cp /path/to/bitstream.bit hw_platform/
+$ cp /path/to/hdf.hdf hw_platform/
+$ petalinux-config --oldconfig --get-hw-description=./hw_platform
+$ petalinux-config
+Image Packaging Configuration -> Root filesystem type -> SDCard -> Exit -> Exit
+$ petalinux-build
+$ petalinux-package --boot --force --fsbl images/linux/zynq_fsbl.elf --fpga images/linux/system_wrapper.bit --u-boot # replace system_wrapper.bit with the actual bitstream name depending on your design
 ```
 
-navigate to the Yocto directory
-```bash
-$ cd poky
+After executing the above, insert the SD card that will be connected to the FPGA. If you do not know your device path, execute the following command and look for your device name (by size, partition or other distinguishable attributes):
+
 ```
-then From [meta-xilinx](https://github.com/Xilinx/meta-xilinx) project on GitHub, you can find the best branch for your FPGA, then you have to clone this branch as well as [openembedded](https://github.com/openembedded/openembedded) same branch 
+fdisk -l
 
-```bash
-$ git clone -b branch_name https://github.com/Xilinx/meta-xilinx.git
-$ git clone -b branch_name https://github.com/openembedded/openembedded.git
-```
-Just make sure that you are in the right branch 
-```bash
-$ git checkout branch_name
-```
-## Start configure your image
+We will assume that the device path is /dev/sdc during this guide. Execute the following to delete all partitions on the device (execute ‘d’ as many times as there are partitions):
 
-```bash
-$ source oe-init-build-env
-```
-this command will move you to build directory
-then you have to edit these two files 
-
-conf/local.conf
-conf/bblayers.conf
-
-in local.conf find the line that specifies the machine time and comment it and replace it with our machine name
-
-#### MACHINE ?= "zybo-zynq7" 
-
-in bblayers.conf add these two lines below the existing ones
-
-### /home/eepraxis/poky/meta-xilinx-bsp \
-### /home/eepraxis/poky/meta-openembedded/meta-oe \
-
-after that you are now can run bitbake command
-
-```bash
-$ bitbake core-image-minimal
-```
-## wait for the building to finish 
-this will take a few hours depending on your computer and internet connection
-
-after that, all the image files needed will be created 
-
-
-### Last step is to burn the image on the sd
-
-It’s important to detect the correct device as the SD card. This is best done by plugging in the USB connector, and looking for something like this is the main log file (/var/log/messages or /var/log/syslog)
-
-```bash
-Sep 5 10:30:59 kernel: sd 1:0:0:0: [sdc] 7813120 512-byte logical blocks
-Sep 5 10:30:59 kernel: sd 1:0:0:0: [sdc] Write Protect is off
-Sep 5 10:30:59 kernel: sd 1:0:0:0: [sdc] Assuming drive cache: write through
-Sep 5 10:30:59 kernel: sd 1:0:0:0: [sdc] Assuming drive cache: write through
-Sep 5 10:30:59 kernel: sdc: sdc1
-Sep 5 10:30:59 kernel: sd 1:0:0:0: [sdc] Assuming drive cache: write through
-Sep 5 10:30:59 kernel: sd 1:0:0:0: [sdc] Attached SCSI removable disk
-Sep 5 10:31:00 kernel: sd 1:0:0:0: Attached scsi generic sg0 type 0
-```
-The output may vary slightly, but the point here is to see what name the kernel gave
-the new disk. “sdc” in the example above.
-
-use fdisk command to format your sd card int to partisions:
-first with 1 Gb space and FAT32 format this will be the Boot dir
-second with the rest of the sd card space and with NTFS format this will be root dir
-
-mount the two partisions to a tmp dir to copy files to them 
-
-```bash
-$ mkdir /tmp/boot
-$ sudo mount /tmp/boot /dev/sdc1
-
-$ mkdir /tmp/Root
-$ sudo mount /tmp/Root /dev/sdc2
+# fdisk /dev/sdc
+> d
+...
+> w
 ```
 
-copy the boot files to boot dir and linux_image files to root dir
+Partition the device by executing the following:
 
-unmount the two dir then remove the sd card and plug it in the fpga
+```
+# fdisk /dev/sdc
+> n
+> p
+> [Press Enter to start at the specified cylinder]
+> +255M
+> n
+> p
+> [Press Enter to start at the specified cylinder]
+> [Press Enter to use the remaining space]
+> w
+```
+
+Execute the following to create a FAT file system (required for booting):
+
+```
+# mkfs.vfat /dev/sdc1
+```
+
+Execute the following to copy the boot files to the FAT partition:
+
+```
+# mount /dev/sdc1 /mnt
+# cp /home/xlnxuser/petalinux_projects/PassKeeper/images/linux/BOOT.bin  /home/xlnxuser/petalinux_projects/PassKeeper/images/linux/uImage /mnt/
+# dd if=/home/xlnxuser/petalinux_projects/PassKeeper/images/linux/rootfs.ext4 /dev/sdc2 bs=4M status=progress
+```
+
+After completing the above, disconnect the SD card and insert it into the FPGA. The FPGA should now be ready to boot with your custom hardware.
+
+## Using Ubuntu
+Because PetaLinux is mainly the Linux kernel, which is not sufficient to provide all the necessary software for communications between the FPGA and Chromium, we replace the rootfs with a pre-built image of Ubuntu for simplicity and easier accessibility.
+### Prerequisites
+Before proceeding, make sure that you have the following prerequisites:
+1. Ubuntu pre-installed image for ARM HF (https://wiki.ubuntu.com/ARM/RaspberryPi)
+2. BOOT.BIN and uImage files generated in 4.1.2 Installing PetaLinux.
+3. SD card, and make sure that you know the device name/path of the SD card.
+
+### Installing Ubuntu
+After getting the pre-installed Ubuntu image, from your Ubuntu 16.04 machine, execute the following assuming that the Ubuntu image is `ubuntu-18.04-preinstalled-server-armhf.img` and your SD card is located at /dev/sdc:
+
+```
+# dd if=ubuntu-18.04-preinstalled-server-armhf.img of=/dev/sdc bs=4M status=progress
+```
+
+After the operation is complete, your SD card should have 2 partitions; a BOOT partition (which is 255M when using the image used in this guide) and an EXT4 partition containing the root file system as explained previously in Chapter 3.
+
+Copy the BOOT.BIN and uImage files to your boot partition by executing the following:
+
+```
+# mount /dev/sdc2 /mnt
+# cp /path/to/BOOT.BIN /path/to/uImage /mnt/
+# umount /mnt #unmount the partition
+```
+
+After the operation is complete, disconnect the SD card and connect it to your FPGA. Your FPGA should now be able to boot with the new Ubuntu system running on the compiled PetaLinux kernel.
