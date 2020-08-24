@@ -2,9 +2,12 @@
 error_reporting(0);
 define("USER_FILE", "/root/user.txt");
 define("USERS_FILE", "/root/users.db");
+define("MASTER_KEY", "5468217473206D79204B756E67204675");
 //INIT
-if (!file_exists(USER_FILE)) touch(USER_FILE);
-if (!file_exists(USERS_FILE)) touch(USER_FILE);
+if (file_exists(USER_FILE)) unlink(USER_FILE);
+touch(USER_FILE);
+if (file_exists(USERS_FILE)) unlink(USERS_FILE);
+touch(USER_FILE);
 //
 //HELPER FUNCTIONS
 function response($output)
@@ -32,8 +35,17 @@ function add_parameter($parameters, $value, $string)
 	}
 	return $string;
 }
+
+function aes_decrypt($ciphertext, $key) //ciphertext in hex
+{
+    return openssl_decrypt(hex2bin($ciphertext), 'aes-128-ecb', $key, OPENSSL_RAW_DATA|OPENSSL_ZERO_PADDING);
+}
 function retrieve_password($username)
 {
+	exec("/bin/sh /usr/local/interface.sh ". bin2hex($username) . " " . MASTER_KEY);
+	$enc_pass = read_memory("0x43c0003C").read_memory("0x43c00040").read_memory("0x43c00044").read_memory("0x43c00048");
+	$password = str_replace("\x00", "", aes_decrypt($enc_pass, hex2bin(MASTER_KEY)));
+	/*
 	$fhandle = fopen(USERS_FILE,"r");
 	$password = "";
 	while(($line = fgets($fhandle)) !== false)
@@ -47,16 +59,27 @@ function retrieve_password($username)
 	}
 	if ($fhandle)
 		fclose($fhandle);
-}
+	*/
 	return $password;
+}
+function read_memory($address)
+{
+	 exec('cut -d ":" -f2 <<< $(devmem2 '.$address.' | grep "Value at")', $output);
+	 return substr(trim($output[0]), 2);
+}
 //
-$allowed_functions = array("heartbeat", "list_users", "get_current", "set_current", "add_account", "encrypt_request");
+$allowed_functions = array("heartbeat", "list_users", "get_current", "set_current", "add_account", "encrypt_request", "get_pw");
 //GLOBAL PARAMETERS
 $username_parameters = array("username", "email", "account", "log");
 $password_parameters = array("password", "pass", "passwd", "pwd");
 //
 
 //BEGIN ALLOWED FUNCTIONS
+function get_pw()
+{
+	$username = readline();
+	return retrieve_password($username);
+}
 function encrypt_request()
 {
 	global $username_parameters, $password_parameters;
@@ -157,12 +180,8 @@ function list_users()
 	$accounts = [];
 	while(($line = fgets($fhandle)) !== false)
 	{
-		$i++;
-		if ($i%2 != 0)
-		{
-			$line = trim(preg_replace('/\s\s+/', ' ', $line));
-			$accounts[] = $line;
-		}
+		$line = trim(preg_replace('/\s\s+/', ' ', $line));
+		$accounts[] = $line;
 	}
 	if ($fhandle)
 		fclose($fhandle);
@@ -185,8 +204,12 @@ function add_account()
 	$password = read_line();
 	//if (in_array($username, list_users())) return "Username already exists.";
 	if (strlen($username) <= 16 && strlen($password) <= 16) //max: 16 chars for each
-	//comment above to allow more than 16 characters (not supported by hardware)
+	//uncomment above to disallow more than 16 characters
 	{
+		exec("/bin/sh /usr/local/interface.sh ". bin2hex($username) . " " . MASTER_KEY . " " . bin2hex($password));
+		file_put_contents(USERS_FILE, $username."\n", FILE_APPEND);
+		return true;
+		/*
 		$fhandle = fopen(USERS_FILE,"r");
 		$i = 0;
 		$contents = ""; //bad practice for large files, will be replaced later by HW function anyway
@@ -208,6 +231,7 @@ function add_account()
 		if ($fhandle)
 			fclose($fhandle);
 		return $found? file_put_contents(USERS_FILE, $contents) : file_put_contents(USERS_FILE, $username."\n".$password."\n", FILE_APPEND)? true : false;
+		*/
 	}
 	return false;
 }
