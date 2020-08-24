@@ -17,7 +17,6 @@ function sanitize_function(fn)
 }
 function create_sock(callback)
 {
-	console.log(_socket_id);
 	callback = sanitize_function(callback);
 	if (_socket_id != -1)
 	{
@@ -91,6 +90,34 @@ function unfilter_username(username, hard = false)
 	}
 	return username;
 }
+var users = {};
+function retrieve_username_byindex(index)
+{
+	return users[index];
+}
+function get_username_index(username)
+{
+	var keys = Object.keys(users);
+	for (var i =0; i <keys.length; i++)
+	{
+		if (users[keys[i]] == username)
+			return keys[i];
+	}
+}
+function index_username(username)
+{
+	var _uniqid = uniqid();
+	while (typeof users[_uniqid] !== "undefined") 
+		_uniqid = uniqid();
+	users[_uniqid] = username;
+	return _uniqid;
+}
+function uniqid()
+{
+	var n = Math.floor(Math.random() * 11);
+	var k = Math.floor(Math.random() * 1000000);
+	return n + k;
+}
 function filter_username(username, hard = false)
 {
 	if (hard)
@@ -114,7 +141,8 @@ function DisplayAccount(username)
 {
 	var orig_username = username;
 	username = filter_username(username, true);
-	$("tbody").append('<tr id="tr_'+username+'"><td data-label="account">'+filter_username(orig_username, false)+'</td><td style="text-align:right;"><button class="ui primary button set-btn" data-username="'+username+'">Set</button></td></tr>');
+	var username_id = index_username(username);
+	$("tbody").append('<tr id="tr_'+username_id+'"><td data-label="account">'+filter_username(orig_username, false)+'</td><td style="text-align:right;"><button class="ui primary button set-btn" data-username="'+username_id+'">Set</button></td></tr>');
 }
 function GetCurrentAccount(callback, new_sock = true)
 {
@@ -131,12 +159,11 @@ function set(username, new_sock = true)
 {
 	preload();
 	username = unfilter_username(username, true);
-	socket_fn(function(){write_data("set\n", function(){ write_data(unfilter_username(username, true)+"\n", function(){RefreshAccounts(DisplayAccounts, false)}); });}, true);
+	socket_fn(function(){write_data("set\n", function(){ write_data(unfilter_username(username, true)+"\n", function(){RefreshAccounts();}); });}, true);
 }
 function DisplayAccounts(data)
 {
 	GetCurrentAccount(function(current_username){
-		_current_username = get_json(current_username);
 		accounts = get_json(data, "#table_preloader");
 		preload(false);
 		if (accounts.length == 0)
@@ -146,11 +173,13 @@ function DisplayAccounts(data)
 		for (var i = 0; i < accounts.length; i++) {
 			DisplayAccount(accounts[i]);
 		}
+		_current_username = get_json(current_username);
+		var _current_username_id = get_username_index(_current_username);
 		$(".set-btn").click(function(){
-			set($(this).data("username"));
+			set(retrieve_username_byindex($(this).data("username")));
 		})
-		if ($("#tr_"+filter_username(_current_username, true)).length > 0)
-			$("#tr_"+filter_username(_current_username, true)).addClass("active");
+		if ($("#tr_"+_current_username_id).length > 0)
+			$("#tr_"+_current_username_id).addClass("active");
 	}, false);
 	
 }
@@ -175,6 +204,7 @@ function AddAccount(username, password, new_sock = true)
 }
 function preload(enable = true)
 {
+	users = {};
 	if (enable)
 	{
 		$(".modal .close").click();
