@@ -24,3 +24,7 @@ Execute the following command as root to add the necessary command to the root u
 ```
 echo "exec /etc/init.d/autorun.sh" >> ~/.profile
 ```
+
+**Installing software wrapper dependencies**
+
+The software wrapper requires PHP to be installed. Refer to the `Software_Wrapper/README.md` file for more information.
