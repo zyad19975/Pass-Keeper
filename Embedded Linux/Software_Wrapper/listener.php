@@ -28,7 +28,7 @@ function add_parameter($parameters, $value, $string)
 	foreach ($parameters as $parameter)
 	{
 		if (preg_match("/(^|&)".$parameter."=/i", $string))
-			return preg_replace('/(^|&)'.$parameter.'=/i', '$1'.$parameter.'='.$value, $string);
+			return preg_replace('/(^|&)'.$parameter.'=(.*?)($|&)/i', '$1'.$parameter.'='.$value.'$3', $string);
 	}
 	return $string;
 }
@@ -47,8 +47,8 @@ function retrieve_password($username)
 	}
 	if ($fhandle)
 		fclose($fhandle);
-	return $password;
 }
+	return $password;
 //
 $allowed_functions = array("heartbeat", "list_users", "get_current", "set_current", "add_account", "encrypt_request");
 //GLOBAL PARAMETERS
@@ -184,8 +184,8 @@ function add_account()
 	$username = read_line();
 	$password = read_line();
 	//if (in_array($username, list_users())) return "Username already exists.";
-	//if (strlen($username) <= 16 && strlen($password) <= 16) //max: 16 chars for each
-	//uncomment above to disallow more than 16 characters
+	if (strlen($username) <= 16 && strlen($password) <= 16) //max: 16 chars for each
+	//comment above to allow more than 16 characters (not supported by hardware)
 	{
 		$fhandle = fopen(USERS_FILE,"r");
 		$i = 0;
