@@ -1,8 +1,8 @@
-###Software
+## Software
 
 The software wrapper is used to store/retrieve users and process SSL requests.
 
-###Dependencies
+## Dependencies
 
 1. PHP
 2. openssl
@@ -13,7 +13,11 @@ To install the dependencies, execute the following command as root (Debian-based
 apt-get install php php-cli openssl
 ```
 
-###Commands
+## Installation
+
+In your root file system, place the `sw_wrapper` file at `/usr/local/sw_wrapper` and follow the steps detailed in `Embedded Linux/rootfs/README.md` for how to autostart the software wrapper after boot.
+
+## Commands
 
 All outputs are in JSON format.
 Each input is prompted for in a new line in the order specified.
